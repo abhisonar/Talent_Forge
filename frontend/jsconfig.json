@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "Node16",
+
     "target": "ES6",
     "baseUrl": "./src",
     "paths": {
-        "@design-system/*": ["src/libs/design-system/*"]
+      "@design-system/*": ["src/libs/design-system/*"]
     }
   },
   "include": ["src/**/*"]
