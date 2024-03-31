@@ -2,10 +2,11 @@ const { generateToken } = require("../../../utils/generatetoken");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../../models/user/user");
+const BasicInfo = require("../../../models/candidate/candidate-basicinfo");
 
 exports.register = async (req, res) => {
   try {
-    const { email, username, password} = req.body;
+    const { email, first_name, last_name, password } = req.body;
 
     const encryptedPassword = await bcrypt.hash(password, 12);
 
@@ -21,8 +22,15 @@ exports.register = async (req, res) => {
     // Create a new user with hashed password
     const user = await new User({
       email,
-      username,
+      first_name,
+      last_name,
       password: encryptedPassword,
+    }).save();
+
+    const basicInfo = await new BasicInfo({
+      user_id: user.id,
+      first_name,
+      last_name,
     }).save();
 
     // Generate JWT token for user authentication
@@ -31,7 +39,8 @@ exports.register = async (req, res) => {
     // Respond with success message and token
     res.json({
       id: user._id,
-      username: user.username,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       token,
       verified: user.verified,
@@ -44,5 +53,3 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-

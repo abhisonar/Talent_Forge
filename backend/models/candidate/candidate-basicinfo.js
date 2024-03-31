@@ -6,9 +6,9 @@ const basicInfoSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  firstName: { type: String, required: true },
+  first_name: { type: String, required: true },
   middleName: String,
-  lastName: { type: String, required: true },
+  last_name: { type: String, required: true },
   bio: String,
 });
 
