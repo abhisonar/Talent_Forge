@@ -1,5 +1,5 @@
-import UiInputText from "libs/design-system/ui-input-text/ui-input-text.component";
-import { Link } from "react-router-dom";
+import UiInputText from 'libs/design-system/controls/ui-input-text/ui-input-text.component';
+import { Link } from 'react-router-dom';
 
 const RegisterComponent = () => {
   return (
@@ -17,31 +17,19 @@ const RegisterComponent = () => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" action="#" method="POST">
-          <UiInputText
-            id="email"
-            label={"Email"}
-            name={"email"}
-            isRequired={true}
-            type="email"
-          />
+          <UiInputText id="email" label={'Email'} name={'email'} isRequired={true} type="email" />
           <UiInputText
             id="password"
-            label={"Password"}
-            name={"password"}
+            label={'Password'}
+            name={'password'}
             isRequired={true}
             type="text"
           />
-          <UiInputText
-            id="role"
-            label={"Role"}
-            name={"role"}
-            isRequired={true}
-            type="text"
-          />
+          <UiInputText id="role" label={'Role'} name={'role'} isRequired={true} type="text" />
           <UiInputText
             id="username"
-            label={"Username"}
-            name={"username"}
+            label={'Username'}
+            name={'username'}
             isRequired={true}
             type="text"
           />
@@ -49,19 +37,17 @@ const RegisterComponent = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Sign Up
             </button>
           </div>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Already a member?{" "}
+          Already a member?{' '}
           <Link
-            to={"/authentication/login"}
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
+            to={'/authentication/login'}
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Login
           </Link>
         </p>

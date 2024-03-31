@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import { UiInputText } from 'libs/design-system';
+import { UiInputText, UiButton } from 'libs/design-system';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import {
   loginFormInitialValues,
   LoginNameValues,
   validateLoginSchema,
-} from 'libs/resources/models/form/authentication/login.form';
+} from 'libs/resources/models/form/index.js';
+import { loginUserApi } from 'libs/resources/api/index.js';
+import { setLocalStorageItem } from 'libs/resources/function/index.js';
+import { STORAGE_KEY_USER_TOKEN } from 'libs/resources/constant/index.js';
+import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const loginFormik = useFormik({
     initialValues: loginFormInitialValues,
@@ -19,12 +25,17 @@ const LoginComponent = () => {
     },
   });
 
-  const handleLoginSubmit = (values) => {
+  const handleLoginSubmit = async (values) => {
     setIsLoading(true);
-    console.log(values);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    loginUserApi(values)
+      .then((res) => {
+        setLocalStorageItem(STORAGE_KEY_USER_TOKEN, res?.token);
+        navigate('/candidate');
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -68,11 +79,7 @@ const LoginComponent = () => {
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Sign in
-          </button>
+          <UiButton label={'Sign In'} type="submit"></UiButton>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
