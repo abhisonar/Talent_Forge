@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken } from '../function/user.function.js';
+import { getUserToken } from '../function/token.function.js';
 
 const API_URL = process.env.API_URL;
 
