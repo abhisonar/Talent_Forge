@@ -1,8 +1,8 @@
-const { generateToken } = require("../../../utils/generatetoken");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const User = require("../../../models/user/user");
-const BasicInfo = require("../../../models/candidate/candidate-basicinfo");
+const { generateToken } = require('../../utils/generatetoken');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../../models/user/user');
+const BasicInfo = require('../../models/candidate/candidate-basicinfo');
 
 exports.register = async (req, res) => {
   try {
@@ -14,8 +14,7 @@ exports.register = async (req, res) => {
     const check = await User.findOne({ email });
     if (check) {
       return res.status(400).json({
-        message:
-          "This email address is already in use. Please try a different email address.",
+        message: 'This email address is already in use. Please try a different email address.',
       });
     }
 
@@ -34,7 +33,7 @@ exports.register = async (req, res) => {
     }).save();
 
     // Generate JWT token for user authentication
-    const token = generateToken({ id: user._id.toString() }, "7d");
+    const token = generateToken({ id: user._id.toString() }, '7d');
 
     // Respond with success message and token
     res.json({
@@ -45,8 +44,7 @@ exports.register = async (req, res) => {
       token,
       verified: user.verified,
       success: true,
-      message:
-        "Registration completed successfully! Please check your email for verification.",
+      message: 'Registration completed successfully! Please check your email for verification.',
     });
   } catch (error) {
     // Handle errors

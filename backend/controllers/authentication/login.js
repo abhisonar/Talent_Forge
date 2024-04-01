@@ -1,6 +1,6 @@
-const User = require('../../../models/user/user');
+const User = require('../../models/user/user');
 const bcrypt = require('bcrypt');
-const { generateToken } = require('../../../utils/generatetoken');
+const { generateToken } = require('../../utils/generatetoken');
 const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
