@@ -6,11 +6,22 @@ const educationSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  university: { type: String, required: true },
-  degree: { type: String, required: true },
-  from: { type: Date, required: true },
-  to: { type: Date, required: true },
-  cgpaOrPercentage: { type: Number, required: true, min: 0, max: 100 },
+  education: {
+    type: String,
+    ref: "Enum",
+    field : 'code',
+    required: true,
+  },
+  institute: { type: String, required: true },
+  course: { type: String, required: true },
+  since: { type: Date, required: true },
+  until: { type: Date, required: true },
+  gradingSystem: {
+    type: String,
+    ref: "Enum",
+    required: true,
+  },
+  marks: { type: Number, required: true, min: 0, max: 10 },
 });
 
-module.exports = mongoose.model("Education-Deatils", educationSchema);
+module.exports = mongoose.model("EducationDetail", educationSchema);
