@@ -56,8 +56,9 @@ exports.updateEducationDetail = async (req, res) => {
     const tokenData = getTokenDataFromRequest(req);
     const { education, institute, course, since, until, gradingSystem, marks } =
       req.body;
+    const { educationDetailId } = req.params;
     const updatedData = await EducationDetails.findOneAndUpdate(
-      { user_id: tokenData.id },
+      { _id: educationDetailId },
       {
         $set: {
           education,
@@ -91,8 +92,9 @@ exports.updateEducationDetail = async (req, res) => {
 exports.deleteEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
+    const { educationDetailId } = req.params;
     const deletedData = await EducationDetails.findOneAndDelete({
-      user_id: tokenData.id,
+      _id: educationDetailId,
     });
     if (!deletedData) {
       return res.status(404).send({
@@ -100,12 +102,12 @@ exports.deleteEducationDetail = async (req, res) => {
       });
     }
     return res.status(200).send({
-      data: deletedData,
       message: "Education details deleted successfully",
     });
   } catch (error) {
     return res.status(500).send({
-      error: "Internal server error",
+      err: error,
+      message: "Internal server error",
     });
   }
 };
