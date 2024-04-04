@@ -1,31 +1,53 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from './App';
-import AuthenticationLayout from './layout/authentication-layout/authentication.layout';
-import LoginComponent from './modules/non-restricted/login/login.component';
-import RegisterComponent from 'modules/non-restricted/registration/registration.component';
-import ProtectedRoute from 'libs/components/protected-route/ProtectedRoute.jsx';
+import { createBrowserRouter } from "react-router-dom";
+import App from "./App";
+import AuthenticationLayout from "./layout/authentication-layout/authentication.layout";
+import LoginComponent from "./modules/non-restricted/login/login.component";
+import RegisterComponent from "modules/non-restricted/registration/registration.component";
+import ProtectedRoute from "libs/components/protected-route/ProtectedRoute.jsx";
+import EditBasicInfo from "modules/restricted/personal-information/basic-info.component.jsx";
+import LandingPage from "libs/components/Landing-Page/landing-page.component.jsx";
+import EditEducationDetails from "modules/restricted/personal-information/education-detail.component.jsx";
 
 export const router = createBrowserRouter([
   {
-    path: 'authentication',
+    path: "authentication",
     element: <AuthenticationLayout />,
     children: [
       {
-        path: 'login',
+        path: "login",
         element: <LoginComponent />,
       },
       {
-        path: 'registration',
+        path: "registration",
         element: <RegisterComponent />,
       },
     ],
   },
   {
-    path: '/',
+    path: "/",
     element: <App />,
-  },
-  {
-    path: '/candidate',
-    element: <ProtectedRoute element={<h1>Hello Candidate</h1>} />,
+    children: [
+      {
+        path: "/",
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/candidate",
+            element: <LandingPage />,
+            children: [
+              {
+                path: "basic-info",
+                element: <EditBasicInfo />,
+              },
+              {
+                path: "education-detail",
+                element: <EditEducationDetails />,
+              },
+             
+            ],
+          },
+        ],
+      },
+    ],
   },
 ]);

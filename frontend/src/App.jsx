@@ -1,11 +1,8 @@
-import './App.css';
+import "./App.css";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return (
-    <>
-      <h1 className="text-red-600">Hello Abhishek Sonar</h1>
-    </>
-  );
+  return <Outlet />;
 }
 
 export default App;

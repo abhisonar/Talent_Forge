@@ -8,12 +8,10 @@ const experienceSchema = new mongoose.Schema({
   },
   designation: { type: String, required: true },
   company: { type: String, required: true },
-  from: { type: Date, required: true },
-  to: { type: Date, required: true },
-  location: String,
-  description: String,
+  since: { type: Date, required: true },
+  until: { type: Date, required: true },
+  location: { type: Date, required: true },
+  description: { type: String },
 });
 
 module.exports = mongoose.model("Experience", experienceSchema);
-
-
