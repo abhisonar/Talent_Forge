@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "module": "Node16",
-
-    "target": "ES6",
-    "baseUrl": "./src",
+    // ...
+    "baseUrl": ".",
     "paths": {
-      "@design-system/*": ["src/libs/design-system/*"]
+      "@/*": ["./src/*"]
     }
-  },
-  "include": ["src/**/*"]
+    // ...
+  }
 }

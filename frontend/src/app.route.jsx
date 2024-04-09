@@ -6,7 +6,7 @@ import RegisterComponent from "modules/non-restricted/registration/registration.
 import ProtectedRoute from "libs/components/protected-route/ProtectedRoute.jsx";
 import EditBasicInfo from "modules/restricted/candidate/personal-information/basic-info/basic-info.component.jsx";
 import LandingPage from "libs/components/Landing-Page/landing-page.component.jsx";
-import EditEducationDetails from "modules/restricted/candidate/personal-information/education-detail.component.jsx";
+// import EditEducationDetails from "modules/restricted/candidate/personal-information/education-detail.component.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -31,10 +31,10 @@ export const router = createBrowserRouter([
         path: "basic-info",
         element: <EditBasicInfo />,
       },
-      {
-        path: "education-detail",
-        element: <EditEducationDetails />,
-      },
+      // {
+      //   path: "education-detail",
+      //   element: <EditEducationDetails />,
+      // },
     ],
   },
   {
