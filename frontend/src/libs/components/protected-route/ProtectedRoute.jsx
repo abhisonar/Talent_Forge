@@ -1,4 +1,4 @@
-import { checkUserTokenExpiry } from 'libs/resources/function/index.js';
+import { checkUserTokenExpiry } from '@/libs/resources/function/index.js';
 import { Navigate } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
