@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
 const educationSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: ObjectId,
+    ref: 'User',
     required: true,
   },
-  education: {
-    type: String,
-    ref: "Enum",
-    field : 'code',
+  educationType: {
+    type: ObjectId,
+    ref: 'Enum',
     required: true,
   },
   institute: { type: String, required: true },
@@ -18,10 +18,10 @@ const educationSchema = new mongoose.Schema({
   until: { type: Date, required: true },
   gradingSystem: {
     type: String,
-    ref: "Enum",
+    ref: 'Enum',
     required: true,
   },
   marks: { type: Number, required: true, min: 0, max: 10 },
 });
 
-module.exports = mongoose.model("EducationDetail", educationSchema);
+module.exports = mongoose.model('EducationDetail', educationSchema);
