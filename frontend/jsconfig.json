@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     // ...
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@libs/*": ["./libs/*"],
+      "@modules/*": ["./modules/*"],
+      "@layout/*": ["./layout/*"],
+      "@shadcnui/*": ["./@/*"]
     }
     // ...
   }

@@ -1,18 +1,17 @@
-import { useState } from "react";
-import { UiInputText, UiButton } from "libs/design-system";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
+import { useState } from 'react';
+import { UiInputText, UiButton } from '@libs/design-system';
+import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
 import {
   loginFormInitialValues,
   LoginNameValues,
   validateLoginSchema,
-} from "libs/resources/models/form/index.js";
-import { loginUserApi } from "libs/resources/api/index.js";
-import { setLocalStorageItem } from "libs/resources/function/index.js";
-import { STORAGE_KEY_USER_TOKEN } from "libs/resources/constant/index.js";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../../../@/components/ui/button";
-
+} from '@libs/resources/models/form/index.js';
+import { loginUserApi } from '@libs/resources/api/index.js';
+import { setLocalStorageItem } from '@libs/resources/function/index.js';
+import { STORAGE_KEY_USER_TOKEN } from '@libs/resources/constant/index.js';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@shadcnui/components/ui/button';
 
 const LoginComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,7 @@ const LoginComponent = () => {
     loginUserApi(values)
       .then((res) => {
         setLocalStorageItem(STORAGE_KEY_USER_TOKEN, res?.token);
-        navigate("/candidate");
+        navigate('/candidate');
       })
       .catch((err) => {
         console.log(err);
@@ -57,42 +56,38 @@ const LoginComponent = () => {
         <form className="space-y-6" onSubmit={loginFormik.handleSubmit}>
           <UiInputText
             id="login_email"
-            label={"Email"}
+            label={'Email'}
             name={LoginNameValues.LOGIN_EMAIL}
             isRequired={true}
             type="email"
             onChange={loginFormik.handleChange}
-            error={loginFormik.errors.login_email || ""}
+            error={loginFormik.errors.login_email || ''}
           />
           <div>
             <UiInputText
               id="login_password"
-              label={"Passwrod"}
+              label={'Passwrod'}
               name={LoginNameValues.LOGIN_PASSWORD}
               isRequired={true}
               type="password"
               onChange={loginFormik.handleChange}
-              error={loginFormik.errors.login_password || ""}
+              error={loginFormik.errors.login_password || ''}
             />
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
-              >
+              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Forgot password?
               </a>
             </div>
           </div>
 
-          <UiButton label={"Sign In"} type="submit"></UiButton>
+          <UiButton label={'Sign In'} type="submit"></UiButton>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
+          Not a member?{' '}
           <Link
-            to={"/authentication/registration"}
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
+            to={'/authentication/registration'}
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Register
           </Link>
         </p>
