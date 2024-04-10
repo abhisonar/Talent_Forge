@@ -1,0 +1,4 @@
+export const UserRoleEnum = Object.freeze({
+  USER_ROLE_RECRUITER: "USER_ROLE_RECRUITER",
+  USER_ROLE_CANDIDATE: "USER_ROLE_CANDIDATE",
+});

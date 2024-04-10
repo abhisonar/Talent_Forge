@@ -4,10 +4,9 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: {
-    type: String,
-    enum: ["Employer", "Candidate"],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Enum",
     required: true,
-    default: "Candidate",
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

@@ -3,10 +3,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user/user");
 const BasicInfo = require("../../models/candidate/candidate-basicinfo");
+const Enum = require("../../models/other/enum.modal");
 
 exports.register = async (req, res) => {
   try {
     const { role, email, first_name, last_name, password } = req.body;
+    console.log(role);
 
     const encryptedPassword = await bcrypt.hash(password, 12);
 
@@ -18,9 +20,11 @@ exports.register = async (req, res) => {
           "This email address is already in use. Please try a different email address.",
       });
     }
-
+    const roleEnum = await Enum.findOne({ code: role });
+    console.log(roleEnum);
     // Create a new user with hashed password
     const user = await new User({
+      role: roleEnum?._id,
       email,
       password: encryptedPassword,
     }).save();
