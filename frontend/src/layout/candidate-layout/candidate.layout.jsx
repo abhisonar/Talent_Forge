@@ -12,7 +12,7 @@ const CandidateLayout = () => {
         <SideNavComponent />
       </div>
       <div className="w-full flex flex-col divide-y">
-        <div className="h-[4.5rem] p-2">
+        <div className="h-[4.5rem] p-2 flex items-center w-full">
           <HeaderNavComponent />
         </div>
         <div className="overflow-auto p-4">
