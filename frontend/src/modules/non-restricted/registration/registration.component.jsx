@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-import UiInputText from "./libs/design-system/controls/ui-input-text/ui-input-text.component";
+
+// import UiInputText from "./libs/design-system/controls/ui-input-text/ui-input-text.component";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-=======
-import { Link } from 'react-router-dom';
-import { useFormik } from 'formik';
->>>>>>> 547ee03c4a25e5955c576b73be0833a51b86fa2b
 import {
   RegisterNameValues,
   validateRegisterSchema,

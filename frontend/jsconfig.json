@@ -5,6 +5,7 @@
     "paths": {
       "@libs/*": ["./libs/*"],
       "@modules/*": ["./modules/*"],
+      "@restricted/*": ["./modules/restricted/*"],
       "@layout/*": ["./layout/*"],
       "@shadcnui/*": ["./@/*"]
     }

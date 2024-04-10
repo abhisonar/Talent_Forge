@@ -6,7 +6,7 @@ const BasicInfo = require("../../models/candidate/candidate-basicinfo");
 
 exports.register = async (req, res) => {
   try {
-    const { email, first_name, last_name, password } = req.body;
+    const { role, email, first_name, last_name, password } = req.body;
 
     const encryptedPassword = await bcrypt.hash(password, 12);
 
