@@ -1,4 +1,4 @@
-import UiInputText from "libs/design-system/controls/ui-input-text/ui-input-text.component";
+import UiInputText from "./libs/design-system/controls/ui-input-text/ui-input-text.component";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import {
