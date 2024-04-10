@@ -91,7 +91,7 @@ const LoginComponent = () => {
             Register
           </Link>
         </p>
-        <Button variant="outline">Button</Button>
+        <Button variant="default">Button</Button>
       </div>
     </div>
   );

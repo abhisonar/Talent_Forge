@@ -1,25 +1,27 @@
-const EducationDetails = require("../../../models/candidate/candidate-education");
-const {
-  getTokenDataFromRequest,
-} = require("../../../shared/function/token.function");
+const EducationDetails = require('../../../models/candidate/candidate-education');
+const EnumModel = require('../../../models/other/enum.modal');
+const { getTokenDataFromRequest } = require('../../../shared/function/token.function');
 
 exports.listEducations = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const data = await EducationDetails.find({ user_id: tokenData.id });
+    const data = await EducationDetails.find({ user_id: tokenData.id }).populate([
+      'educationType',
+      'gradingSystem',
+    ]);
     if (!data) {
       return res.status(404).send({
-        error: "No education details found for the user",
+        error: 'No education details found for the user',
       });
     }
 
     return res.status(200).send({
       data,
-      message: "Education details fetched successfully",
+      message: 'Education details fetched successfully',
     });
   } catch (error) {
     return res.status(500).send({
-      error: "Internal server error",
+      error: 'Internal server error',
     });
   }
 };
@@ -27,26 +29,29 @@ exports.listEducations = async (req, res) => {
 exports.addEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const { education, institute, course, since, until, gradingSystem, marks } =
-      req.body;
+    const { education, institute, course, since, until, gradingSystem, marks } = req.body;
+
+    const educationEnum = await EnumModel.findOne({ code: education });
+    const gradingSystemEnum = await EnumModel.findOne({ code: gradingSystem });
+
     const data = new EducationDetails({
-      user_id: tokenData.id,
-      education,
+      user_id: tokenData?.id,
+      educationType: educationEnum?._id,
       institute,
       course,
       since,
       until,
-      gradingSystem,
+      gradingSystem: gradingSystemEnum?._id,
       marks,
     });
     await data.save();
     return res.status(200).send({
       data: data || [],
-      message: "Education details added successfully",
+      message: 'Education details added successfully',
     });
   } catch (error) {
     return res.status(500).send({
-      error: "Internal server error",
+      error: 'Internal server error',
     });
   }
 };
@@ -54,8 +59,7 @@ exports.addEducationDetail = async (req, res) => {
 exports.updateEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const { education, institute, course, since, until, gradingSystem, marks } =
-      req.body;
+    const { education, institute, course, since, until, gradingSystem, marks } = req.body;
     const { educationDetailId } = req.params;
     const updatedData = await EducationDetails.findOneAndUpdate(
       { _id: educationDetailId },
@@ -75,16 +79,16 @@ exports.updateEducationDetail = async (req, res) => {
 
     if (!updatedData) {
       return res.status(404).send({
-        error: "Education detail not found",
+        error: 'Education detail not found',
       });
     }
     return res.status(200).send({
       data: updatedData,
-      message: "Education detail updated successfully",
+      message: 'Education detail updated successfully',
     });
   } catch (error) {
     return res.status(500).send({
-      error: "Internal server error",
+      error: 'Internal server error',
     });
   }
 };
@@ -98,16 +102,16 @@ exports.deleteEducationDetail = async (req, res) => {
     });
     if (!deletedData) {
       return res.status(404).send({
-        error: "Education details not found",
+        error: 'Education details not found',
       });
     }
     return res.status(200).send({
-      message: "Education details deleted successfully",
+      message: 'Education details deleted successfully',
     });
   } catch (error) {
     return res.status(500).send({
       err: error,
-      message: "Internal server error",
+      message: 'Internal server error',
     });
   }
 };

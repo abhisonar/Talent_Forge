@@ -1,26 +1,22 @@
-
-import ReactEcharts from "echarts-for-react";
-import Logo from "../../../assets/Logo.png"
-
+import ReactEcharts from 'echarts-for-react';
 
 const Loader = () => {
-
   const option = {
     graphic: {
       elements: [
         {
-          type: "text",
-          left: "center",
-          top: "center",
+          type: 'text',
+          left: 'center',
+          top: 'center',
           style: {
-            text: "TalentForge",
-            fontFamily: "caliber",
+            text: 'TalentForge',
+            fontFamily: 'caliber',
             fontSize: 80,
-            fontWeight: "bold",
+            fontWeight: 'bold',
             lineDash: [0, 200],
             lineDashOffset: 0,
-            fill: "transparent",
-            stroke: "#c06a6f",
+            fill: 'transparent',
+            stroke: '#c06a6f',
             lineWidth: 1,
           },
           keyframeAnimation: {
@@ -30,7 +26,7 @@ const Loader = () => {
               {
                 percent: 0.7,
                 style: {
-                  fill: "transparent",
+                  fill: 'transparent',
                   lineDashOffset: 200,
                   lineDash: [200, 0],
                 },
@@ -39,13 +35,13 @@ const Loader = () => {
                 // Stop for a while.
                 percent: 0.6,
                 style: {
-                  fill: "transparent",
+                  fill: 'transparent',
                 },
               },
               {
                 percent: 1,
                 style: {
-                  fill: "#c06a6f",
+                  fill: '#c06a6f',
                 },
               },
             ],
@@ -57,13 +53,12 @@ const Loader = () => {
   return (
     <div className="loader">
       <div className="loader-content">
-        <img src={Logo} alt="#" />
-       
-        <ReactEcharts
-          option={option}
-          style={{ height: "200px", width: "100%" }}
-        />
-         <p className="custom-font">Navigate Your Career Path: Find Opportunities, Ignite Possibilities.</p>
+        <img src={'/assets/Logo.png'} alt="#" />
+
+        <ReactEcharts option={option} style={{ height: '200px', width: '100%' }} />
+        <p className="custom-font">
+          Navigate Your Career Path: Find Opportunities, Ignite Possibilities.
+        </p>
       </div>
     </div>
   );

@@ -11,12 +11,12 @@ import LandingPage from "./libs/components/Landing-Page/landing-page.component.j
 =======
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import LandingPage from '@libs/components/Landing-Page/landing-page.component';
 import ProtectedRoute from '@libs/components/protected-route/ProtectedRoute';
 import AuthenticationLayout from '@layout/authentication-layout/authentication.layout';
 import LoginComponent from '@modules/non-restricted/login/login.component';
 import RegisterComponent from '@modules/non-restricted/registration/registration.component';
 import EditBasicInfo from '@modules/restricted/candidate/personal-information/basic-info/basic-info.component';
+import CandidateLayout from '@layout/candidate-layout/candidate.layout';
 // import EditEducationDetails from "@modules/restricted/candidate/personal-information/education-detail.component.jsx";
 >>>>>>> 547ee03c4a25e5955c576b73be0833a51b86fa2b
 
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/candidate',
-    element: <ProtectedRoute element={<LandingPage />} />,
+    element: <ProtectedRoute element={<CandidateLayout />} />,
     children: [
       {
         path: 'basic-info',
