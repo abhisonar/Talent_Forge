@@ -1,8 +1,8 @@
 import './App.scss';
-import { Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function App() {
-  return <Outlet />;
+  return <Navigate to={'/candidate'} />;
 }
 
 export default App;
