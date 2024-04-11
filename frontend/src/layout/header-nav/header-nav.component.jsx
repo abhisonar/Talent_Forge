@@ -1,6 +1,6 @@
+import { UiInputText } from '@libs/design-system';
 import { clearLocalStorage } from '@libs/resources/function';
 import { Avatar, AvatarFallback, AvatarImage } from '@shadcnui/components/ui/avatar';
-import { Input } from '@shadcnui/components/ui/input';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const HeaderNavComponent = () => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <Input placeholder="Search" />
+      <UiInputText placeholder="Search" />
 
       <div className="flex items-center gap-2.5">
         <Avatar>
