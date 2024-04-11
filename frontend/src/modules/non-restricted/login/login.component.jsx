@@ -1,7 +1,11 @@
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUserApi } from '@libs/resources/api/index.js';
-import { setLocalStorageItem, toastApiErrorMessage } from '@libs/resources/function/index.js';
+import {
+  setLocalStorageItem,
+  toastApiErrorMessage,
+  toastSuccessMessage,
+} from '@libs/resources/function/index.js';
 import { STORAGE_KEY_USER_TOKEN } from '@libs/resources/constant/index.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +23,7 @@ const LoginComponent = () => {
     // setIsLoading(true);
     loginUserApi(values)
       .then((res) => {
+        toastSuccessMessage(toast, 'Login Successfully');
         setLocalStorageItem(STORAGE_KEY_USER_TOKEN, res?.token);
         navigate('/candidate');
       })

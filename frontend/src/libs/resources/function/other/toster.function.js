@@ -1,5 +1,6 @@
 export function toastSuccessMessage(toast, message = '') {
   toast({
+    variant: 'success',
     title: message || 'Saved Successfully',
   });
 }
@@ -27,5 +28,12 @@ export function toastApiErrorMessage(toast, err) {
   toast({
     variant: 'destructive',
     title: errorMessage,
+  });
+}
+
+export function toastMessage(toast, message, variant = 'default') {
+  toast({
+    variant,
+    title: message,
   });
 }
