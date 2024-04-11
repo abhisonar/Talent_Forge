@@ -1,17 +1,19 @@
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUserApi } from '@libs/resources/api/index.js';
-import { setLocalStorageItem } from '@libs/resources/function/index.js';
+import { setLocalStorageItem, toastApiErrorMessage } from '@libs/resources/function/index.js';
 import { STORAGE_KEY_USER_TOKEN } from '@libs/resources/constant/index.js';
 import { useNavigate } from 'react-router-dom';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@shadcnui/components/ui/tabs';
 import CandicateLoginFormCommponent from '@modules/non-restricted/login/candidate-login-form/candidate-login-form.component';
+import { useToast } from '@shadcnui/components/ui/use-toast';
 
 const LoginComponent = () => {
   // const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleLoginSubmit = async (values) => {
     // setIsLoading(true);
@@ -21,9 +23,9 @@ const LoginComponent = () => {
         navigate('/candidate');
       })
       .catch((err) => {
-        console.log(err);
-      })
-      // .finally(() => setIsLoading(false));
+        toastApiErrorMessage(toast, err);
+      });
+    // .finally(() => setIsLoading(false));
   };
 
   return (

@@ -32,7 +32,7 @@ const CandicateLoginFormCommponent = ({ handleLoginSubmit }) => {
           id="login_password"
           placeholder={'Passwrod'}
           name={LoginNameValues.LOGIN_PASSWORD}
-          isRequired={true}
+          required={true}
           type="password"
           onChange={loginFormik.handleChange}
           error={loginFormik.errors.login_password || ''}
