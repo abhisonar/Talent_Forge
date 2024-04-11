@@ -18,7 +18,6 @@ const CandicateLoginFormCommponent = ({ handleLoginSubmit }) => {
   });
   return (
     <form className="space-y-6" onSubmit={loginFormik.handleSubmit}>
-      {JSON.stringify(loginFormik)}
       <UiInputText
         id="login_email"
         placeholder={'Email'}
