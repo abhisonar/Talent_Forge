@@ -13,3 +13,5 @@ const preferencesSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Preferences", preferencesSchema);
+
+

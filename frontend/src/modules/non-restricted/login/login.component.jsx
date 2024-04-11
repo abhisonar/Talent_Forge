@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUserApi } from '@libs/resources/api/index.js';
 import { setLocalStorageItem } from '@libs/resources/function/index.js';
@@ -9,12 +9,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@shadcnui/components/u
 import CandicateLoginFormCommponent from '@modules/non-restricted/login/candidate-login-form/candidate-login-form.component';
 
 const LoginComponent = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLoginSubmit = async (values) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     loginUserApi(values)
       .then((res) => {
         setLocalStorageItem(STORAGE_KEY_USER_TOKEN, res?.token);
@@ -23,7 +23,7 @@ const LoginComponent = () => {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => setIsLoading(false));
+      // .finally(() => setIsLoading(false));
   };
 
   return (
