@@ -30,7 +30,6 @@ const EducationFormComponent = () => {
     return listInstitutes({
       title: search || 'Pune',
     }).then((response) => {
-      console.log(response);
       return response?.map((item) => getAutocompleteOption(item, '_id', 'title'));
     });
   };
