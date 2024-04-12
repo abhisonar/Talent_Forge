@@ -8,8 +8,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-const UiInputSelectComponenet = ({ apiFun }) => {
+} from '@shadcnui/components/ui/select';
+const UiInputSelectComponenet = ({ apiFun, label }) => {
   const [displayOptions, setDisplayOptions] = useState([]);
 
   useEffect(() => {
@@ -31,18 +31,15 @@ const UiInputSelectComponenet = ({ apiFun }) => {
   return (
     <div>
       <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select an option" />
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={label} />
         </SelectTrigger>
         <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Options</SelectLabel>
-            {displayOptions.map((option) => (
-              <SelectItem key={option._id} value={option._id}>
-                {option.title}
-              </SelectItem>
-            ))}
-          </SelectGroup>
+          {displayOptions.map((option) => (
+            <SelectItem key={option.id} value={option.id}>
+              {option.value}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

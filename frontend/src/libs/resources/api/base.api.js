@@ -13,22 +13,22 @@ const setRequestAuthorisation = () => {
 
 export async function httpGet(url, params) {
   setRequestAuthorisation();
-  return await axios.get(`${API_URL}/${url}`, { params });
+  return await axios.get(`${API_URL}/${url}`, { params }).then((response) => response?.data);
 }
 
 export async function httpPost(url, paylaod) {
   setRequestAuthorisation();
-  return await axios.post(`${API_URL}/${url}`, paylaod);
+  return await axios.post(`${API_URL}/${url}`, paylaod).then((response) => response?.data);
 }
 
 export async function httpPut(url, paylaod) {
   setRequestAuthorisation();
-  return await axios.put(`${API_URL}/${url}`, paylaod);
+  return await axios.put(`${API_URL}/${url}`, paylaod).then((response) => response?.data);
 }
 
 export async function httpDelete(url) {
   setRequestAuthorisation();
-  return await axios.delete(`${API_URL}/${url}`);
+  return await axios.delete(`${API_URL}/${url}`).then((response) => response?.data);
 }
 
 const httpClient = {

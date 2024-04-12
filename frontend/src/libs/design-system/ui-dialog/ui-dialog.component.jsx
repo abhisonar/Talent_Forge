@@ -6,8 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from "@shadcnui/components/ui/dialog";
-import { UiButton } from "..";
+} from '@shadcnui/components/ui/dialog';
+import { UiButton } from '..';
 
 const UiDialog = ({
   triggerTemplateFun,
@@ -24,7 +24,7 @@ const UiDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        { triggerTemplateFun ? triggerTemplateFun : (<UiButton>{triggerLabel}</UiButton>) }
+        {triggerTemplateFun ? triggerTemplateFun : <UiButton>{triggerLabel}</UiButton>}
       </DialogTrigger>
       <DialogContent className={dialogWidth}>
         <DialogHeader>
@@ -32,12 +32,12 @@ const UiDialog = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {children}
-        <DialogFooter>
+        {/* <DialogFooter>
           { footerTemplateFun ? footerTemplateFun() : ( <UiButton type="submit" onClick={() => saveFun()}>
             {saveBtnTitle || "Save"}
           </UiButton>
           ) }
-        </DialogFooter>
+        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   );

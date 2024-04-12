@@ -1,12 +1,12 @@
-import { Button } from "@shadcnui/components/ui/button";
+import { Button } from '@shadcnui/components/ui/button';
 
 // eslint-disable-next-line react/prop-types
-const UiButtom = ({ type = "button", children, onClick, variant }) => {
+const UiButton = ({ type = 'button', children, onClick, variant, className }) => {
   return (
-    <Button type={type} variant={variant} onClick={onClick}>
+    <Button type={type} variant={variant} onClick={onClick} className={className}>
       {children}
     </Button>
   );
 };
 
-export default UiButtom;
+export default UiButton;

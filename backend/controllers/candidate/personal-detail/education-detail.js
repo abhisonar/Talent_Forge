@@ -1,5 +1,6 @@
 const CandidateEducationCollection = require('../../../models/candidate/candidate-education');
 const EnumModel = require('../../../models/other/enum.modal');
+const InstituteCollection = require('../../../models/master_data/institute.model');
 const { getTokenDataFromRequest } = require('../../../shared/function/token.function');
 
 exports.listEducations = async (req, res) => {
@@ -109,6 +110,24 @@ exports.deleteEducationDetail = async (req, res) => {
       message: 'Education details deleted successfully',
     });
   } catch (error) {
+    return res.status(500).send({
+      err: error,
+      message: 'Internal server error',
+    });
+  }
+};
+
+exports.listInstitutes = async (req, res) => {
+  try {
+    const { title } = req.query;
+    const institutes = await InstituteCollection.find({
+      title: { $regex: '.*' + title + '.*', $options: 'i' },
+    }).limit(15);
+
+    return res.send({
+      data: institutes,
+    });
+  } catch (err) {
     return res.status(500).send({
       err: error,
       message: 'Internal server error',
