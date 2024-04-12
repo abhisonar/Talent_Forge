@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const experienceSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   designation: { type: String, required: true },
@@ -14,4 +14,4 @@ const experienceSchema = new mongoose.Schema({
   description: { type: String },
 });
 
-module.exports = mongoose.model("Experience", experienceSchema);
+module.exports = mongoose.model('CandidateExperienceCollection', experienceSchema);

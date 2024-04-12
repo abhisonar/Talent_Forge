@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 const UiInputSelectComponenet = ({ apiFun }) => {
-  const [options, setOptions] = useState([]);
+  const [displayOptions, setDisplayOptions] = useState([]);
 
   useEffect(() => {
     handleApiCall();
@@ -21,7 +21,7 @@ const UiInputSelectComponenet = ({ apiFun }) => {
 
     apiFun()
       .then((response) => {
-        setOptions(response);
+        setDisplayOptions(response);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -37,7 +37,7 @@ const UiInputSelectComponenet = ({ apiFun }) => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Options</SelectLabel>
-            {options.map((option) => (
+            {displayOptions.map((option) => (
               <SelectItem key={option._id} value={option._id}>
                 {option.title}
               </SelectItem>

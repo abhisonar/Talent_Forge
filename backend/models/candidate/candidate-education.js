@@ -24,4 +24,4 @@ const educationSchema = new mongoose.Schema({
   marks: { type: Number, required: true, min: 0, max: 10 },
 });
 
-module.exports = mongoose.model('EducationDetail', educationSchema);
+module.exports = mongoose.model('CandidateEducationCollection', educationSchema);

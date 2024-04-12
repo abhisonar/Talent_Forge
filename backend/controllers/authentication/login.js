@@ -1,4 +1,4 @@
-const User = require("../../models/user/user");
+const UserCollection = require("../../models/user/user");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../../utils/generatetoken");
 const jwt = require("jsonwebtoken");
@@ -8,7 +8,7 @@ exports.login = async (req, res) => {
     const { login_email, login_password } = req.body;
 
     // Find user by email
-    const user = await User.findOne({ email: login_email }).populate("role");
+    const user = await UserCollection.findOne({ email: login_email }).populate("role");
     if (!user) {
       // If user not found, return error
       return res.status(400).json({
@@ -46,7 +46,7 @@ exports.currentUser = async (req, res) => {
   try {
     // Verify user token
     const user = jwt.verify(usertoken, process.env.TOKEN_SECRET);
-    const check = await User.findById(user.id);
+    const check = await UserCollection.findById(user.id);
     if (!check) {
       // If user not found, return error
       return res.status(400).json({
