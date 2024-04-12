@@ -1,4 +1,4 @@
-import EducationComponent from './education/education.component';
+import EducationComponent from './portfolio-form/component/education/education.component';
 import PortfolioComponenet from './portfolio.component';
 
 export const portfolioRoute = [
