@@ -42,3 +42,23 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+.elementor-shape-fill {
+  @apply bg-black;
+}

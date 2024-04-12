@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react';
 import {
   Select,
   SelectContent,
@@ -8,21 +8,26 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-const UiInputSelectComponenet = () => {
+} from '@/components/ui/select';
+const UiInputSelectComponenet = ({ apiFun }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/colleges")
+    handleApiCall();
+  }, []);
+
+  const handleApiCall = () => {
+    if (!apiFun) return;
+
+    apiFun()
       .then((response) => {
-        const titles = response.data.map((college) => college.title);
-        setOptions(titles);
+        setOptions(response);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       });
-  }, []);
+  };
+
   return (
     <div>
       <Select>

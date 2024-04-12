@@ -1,10 +1,10 @@
+import { UiInputText } from '@libs/design-system';
 import {
   LoginNameValues,
   loginFormInitialValues,
   validateLoginSchema,
 } from '@libs/resources/models/form';
 import { Button } from '@shadcnui/components/ui/button';
-import { Input } from '@shadcnui/components/ui/input';
 import { useFormik } from 'formik';
 
 // eslint-disable-next-line react/prop-types
@@ -18,17 +18,18 @@ const CandicateLoginFormCommponent = ({ handleLoginSubmit }) => {
   });
   return (
     <form className="space-y-6" onSubmit={loginFormik.handleSubmit}>
-      <Input
+      <UiInputText
         id="login_email"
         placeholder={'Email'}
+        label={'Email'}
         name={LoginNameValues.LOGIN_EMAIL}
-        required={true}
+        isRequired={true}
         type="email"
         onChange={loginFormik.handleChange}
         error={loginFormik.errors.login_email || ''}
       />
       <div>
-        <Input
+        <UiInputText
           id="login_password"
           placeholder={'Passwrod'}
           name={LoginNameValues.LOGIN_PASSWORD}
