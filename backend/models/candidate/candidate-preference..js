@@ -12,6 +12,6 @@ const preferencesSchema = new mongoose.Schema({
   preferredCityForOffice: { type: String },
 });
 
-module.exports = mongoose.model("Preferences", preferencesSchema);
+module.exports = mongoose.model("CandidatePreferenceCollection", preferencesSchema);
 
 

@@ -1,11 +1,12 @@
-const EducationDetails = require('../../../models/candidate/candidate-education');
+const CandidateEducationCollection = require('../../../models/candidate/candidate-education');
 const EnumModel = require('../../../models/other/enum.modal');
+const InstituteCollection = require('../../../models/master_data/institute.model');
 const { getTokenDataFromRequest } = require('../../../shared/function/token.function');
 
 exports.listEducations = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const data = await EducationDetails.find({ user_id: tokenData.id }).populate([
+    const data = await CandidateEducationCollection.find({ user_id: tokenData.id }).populate([
       'educationType',
       'gradingSystem',
     ]);
@@ -34,7 +35,7 @@ exports.addEducationDetail = async (req, res) => {
     const educationEnum = await EnumModel.findOne({ code: education });
     const gradingSystemEnum = await EnumModel.findOne({ code: gradingSystem });
 
-    const data = new EducationDetails({
+    const data = new CandidateEducationCollection({
       user_id: tokenData?.id,
       educationType: educationEnum?._id,
       institute,
@@ -61,7 +62,7 @@ exports.updateEducationDetail = async (req, res) => {
     const tokenData = getTokenDataFromRequest(req);
     const { education, institute, course, since, until, gradingSystem, marks } = req.body;
     const { educationDetailId } = req.params;
-    const updatedData = await EducationDetails.findOneAndUpdate(
+    const updatedData = await CandidateEducationCollection.findOneAndUpdate(
       { _id: educationDetailId },
       {
         $set: {
@@ -97,7 +98,7 @@ exports.deleteEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
     const { educationDetailId } = req.params;
-    const deletedData = await EducationDetails.findOneAndDelete({
+    const deletedData = await CandidateEducationCollection.findOneAndDelete({
       _id: educationDetailId,
     });
     if (!deletedData) {
@@ -109,6 +110,24 @@ exports.deleteEducationDetail = async (req, res) => {
       message: 'Education details deleted successfully',
     });
   } catch (error) {
+    return res.status(500).send({
+      err: error,
+      message: 'Internal server error',
+    });
+  }
+};
+
+exports.listInstitutes = async (req, res) => {
+  try {
+    const { title } = req.query;
+    const institutes = await InstituteCollection.find({
+      title: { $regex: '.*' + title + '.*', $options: 'i' },
+    }).limit(15);
+
+    return res.send({
+      data: institutes,
+    });
+  } catch (err) {
     return res.status(500).send({
       err: error,
       message: 'Internal server error',
