@@ -1,7 +1,7 @@
 import { httpPost } from '../base.api.js';
 
 export const loginUserApi = async (payload) => {
-  return httpPost(`login`, payload).then((res) => res.data);
+  return httpPost(`login`, payload)
 };
 
 export const registerUserApi = async (payload) => {

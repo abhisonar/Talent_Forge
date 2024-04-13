@@ -24,7 +24,9 @@ const LoginComponent = () => {
     loginUserApi(values)
       .then((res) => {
         toastSuccessMessage(toast, 'Login Successfully');
+        console.log(res);
         setLocalStorageItem(STORAGE_KEY_USER_TOKEN, res?.token);
+
         navigate('/candidate');
       })
       .catch((err) => {

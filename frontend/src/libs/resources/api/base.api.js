@@ -11,14 +11,17 @@ const setRequestAuthorisation = () => {
   });
 };
 
-export async function httpGet(url, params) {
+export async function 
+httpGet(url, params) {
   setRequestAuthorisation();
   return await axios.get(`${API_URL}/${url}`, { params }).then((response) => response?.data);
 }
 
 export async function httpPost(url, paylaod) {
   setRequestAuthorisation();
-  return await axios.post(`${API_URL}/${url}`, paylaod).then((response) => response?.data);
+  return await axios.post(`${API_URL}/${url}`, paylaod).then((response) => {
+  console.log(response);
+    return response?.data});
 }
 
 export async function httpPut(url, paylaod) {

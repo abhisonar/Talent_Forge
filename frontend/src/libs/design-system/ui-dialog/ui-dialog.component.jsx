@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
+
 } from '@shadcnui/components/ui/dialog';
 import { UiButton } from '..';
 
