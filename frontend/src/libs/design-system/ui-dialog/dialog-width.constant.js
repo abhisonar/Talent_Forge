@@ -3,10 +3,10 @@ export const DIALOG_WIDTH_MD = '580px';
 export const DIALOG_WIDTH_LG = '750px';
 
 export const DIALOG_WIDTH_ALIAS = {
-  sm: 'max-w-[450px]',
-  md: 'max-w-[550px]',
-  lg: 'max-w-[650px]',
-  xl: 'max-w-[750px]',
+  sm: 'w-[450px]',
+  md: 'w-[550px]',
+  lg: 'w-[650px]',
+  xl: 'w-[750px]',
 };
 
 export const DIALOG_HEIGHT_ALIAS = {

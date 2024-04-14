@@ -1,14 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@shadcnui/components/ui/select';
+import { useState, useEffect, useRef } from 'react';
+import { Dropdown } from 'primereact/dropdown';
+import { AutoComplete } from 'primereact/autocomplete';
+
 const UiInputSelectComponenet = ({
   apiFun,
   placeholder,
@@ -16,8 +10,13 @@ const UiInputSelectComponenet = ({
   isAsyncData,
   selectedValue,
   setSelectedValue,
+  optionTemplate,
+  isDropDown = true,
 }) => {
   const [displayOptions, setDisplayOptions] = useState([]);
+  const [filteredDisplayOptions, setFilteredDisplayOptions] = useState([]);
+
+  const autocompleteRef = useRef();
 
   useEffect(() => {
     handleDataChange();
@@ -47,21 +46,36 @@ const UiInputSelectComponenet = ({
     setSelectedValue && setSelectedValue(value);
   };
 
+  const defaultOptionTemplate = (option) => {
+    return <div className="text-sm w-full p-1 rounded-md">{option?.label}</div>;
+  };
+
+  const handleComplete = (event) => {
+    setFilteredDisplayOptions(
+      event?.query
+        ? displayOptions?.filter((item) =>
+            item?.label?.toString().toLowerCase()?.includes(event.query)
+          )
+        : [...displayOptions]
+    );
+    autocompleteRef?.current?.show();
+  };
+
   return (
-    <div>
-      <Select onValueChange={selectionChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          {displayOptions.map((option) => (
-            <SelectItem key={option.id} value={option.id}>
-              {option.value}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <AutoComplete
+      ref={autocompleteRef}
+      inputClassName="p-2 pr-6 border border-slate-300 w-full"
+      itemTemplate={optionTemplate || defaultOptionTemplate}
+      suggestions={filteredDisplayOptions}
+      placeholder={placeholder}
+      value={selectedValue}
+      onChange={(e) => setSelectedValue(e.value)}
+      completeMethod={handleComplete}
+      checkmark={true}
+      onFocus={handleComplete}
+      forceSelection={isDropDown}
+      field="label"
+      panelClassName="p-1 gap-2"></AutoComplete>
   );
 };
 
