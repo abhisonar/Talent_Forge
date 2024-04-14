@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Dialog,
   DialogContent,
@@ -5,9 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-
 } from '@shadcnui/components/ui/dialog';
-import { UiButton } from '..';
+import { DIALOG_HEIGHT_ALIAS, DIALOG_WIDTH_ALIAS, UiButton } from '..';
 
 const UiDialog = ({
   triggerTemplateFun,
@@ -20,13 +20,14 @@ const UiDialog = ({
   description,
   children,
   dialogWidth,
+  dialogHeight,
 }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
         {triggerTemplateFun ? triggerTemplateFun : <UiButton>{triggerLabel}</UiButton>}
       </DialogTrigger>
-      <DialogContent className={dialogWidth}>
+      <DialogContent className={`${DIALOG_WIDTH_ALIAS[dialogWidth]}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

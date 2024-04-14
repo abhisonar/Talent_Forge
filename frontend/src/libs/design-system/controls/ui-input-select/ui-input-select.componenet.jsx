@@ -9,12 +9,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@shadcnui/components/ui/select';
-const UiInputSelectComponenet = ({ apiFun, label }) => {
+const UiInputSelectComponenet = ({
+  apiFun,
+  placeholder,
+  options,
+  isAsyncData,
+  selectedValue,
+  setSelectedValue,
+}) => {
   const [displayOptions, setDisplayOptions] = useState([]);
 
   useEffect(() => {
-    handleApiCall();
-  }, []);
+    handleDataChange();
+  }, [options]);
+
+  const handleDataChange = () => {
+    if (!isAsyncData) {
+      setDisplayOptions(options?.length ? [...options] : []);
+    } else {
+      handleApiCall();
+    }
+  };
 
   const handleApiCall = () => {
     if (!apiFun) return;
@@ -28,11 +43,15 @@ const UiInputSelectComponenet = ({ apiFun, label }) => {
       });
   };
 
+  const selectionChange = (value) => {
+    setSelectedValue && setSelectedValue(value);
+  };
+
   return (
     <div>
-      <Select>
+      <Select onValueChange={selectionChange}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder={label} />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           {displayOptions.map((option) => (
