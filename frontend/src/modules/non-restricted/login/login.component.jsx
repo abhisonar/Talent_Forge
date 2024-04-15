@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUserApi } from '@libs/resources/api/index.js';
 import {
@@ -14,13 +14,13 @@ import CandicateLoginFormCommponent from '@modules/non-restricted/login/candidat
 import { useToast } from '@shadcnui/components/ui/use-toast';
 
 const LoginComponent = () => {
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLoginSubmit = async (values) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     loginUserApi(values)
       .then((res) => {
         toastSuccessMessage(toast, 'Login Successfully');
@@ -31,6 +31,9 @@ const LoginComponent = () => {
       })
       .catch((err) => {
         toastApiErrorMessage(toast, err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
     // .finally(() => setIsLoading(false));
   };
@@ -44,12 +47,18 @@ const LoginComponent = () => {
         </TabsList>
         <TabsContent value="candidate">
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <CandicateLoginFormCommponent handleLoginSubmit={handleLoginSubmit} />
+            <CandicateLoginFormCommponent
+              handleLoginSubmit={handleLoginSubmit}
+              isLoading={isLoading}
+            />
           </div>
         </TabsContent>
         <TabsContent value="employer">
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <CandicateLoginFormCommponent handleLoginSubmit={handleLoginSubmit} />
+            <CandicateLoginFormCommponent
+              handleLoginSubmit={handleLoginSubmit}
+              isLoading={isLoading}
+            />
           </div>
         </TabsContent>
       </Tabs>
@@ -65,4 +74,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;  
+export default LoginComponent;

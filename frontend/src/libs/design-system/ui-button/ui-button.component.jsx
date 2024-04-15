@@ -1,10 +1,22 @@
+/* eslint-disable react/prop-types */
 import { Button } from '@shadcnui/components/ui/button';
 
-// eslint-disable-next-line react/prop-types
-const UiButton = ({ type = 'button', children, onClick, variant, className }) => {
+const UiButton = ({
+  type = 'button',
+  children,
+  onClick,
+  variant,
+  className,
+  icon,
+  label,
+  isLoading,
+}) => {
   return (
-    <Button type={type} variant={variant} onClick={onClick} className={className}>
-      {children}
+    <Button type={type} variant={variant} onClick={onClick} className={'p-2'} icon={icon}>
+      <div className="flex items-center gap-1">
+        {isLoading && <i className="pi pi-spin pi-spinner" style={{ fontSize: '15px' }}></i>}
+        {children}
+      </div>
     </Button>
   );
 };

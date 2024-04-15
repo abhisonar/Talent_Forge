@@ -12,6 +12,7 @@ const UiInputSelectComponenet = ({
   setSelectedValue,
   optionTemplate,
   isDropDown = true,
+  error,
 }) => {
   const [displayOptions, setDisplayOptions] = useState([]);
   const [filteredDisplayOptions, setFilteredDisplayOptions] = useState([]);
@@ -42,8 +43,8 @@ const UiInputSelectComponenet = ({
       });
   };
 
-  const selectionChange = (value) => {
-    setSelectedValue && setSelectedValue(value);
+  const selectionChange = (e) => {
+    setSelectedValue && setSelectedValue(e?.value);
   };
 
   const defaultOptionTemplate = (option) => {
@@ -62,20 +63,23 @@ const UiInputSelectComponenet = ({
   };
 
   return (
-    <AutoComplete
-      ref={autocompleteRef}
-      inputClassName="p-2 pr-6 border border-slate-300 w-full"
-      itemTemplate={optionTemplate || defaultOptionTemplate}
-      suggestions={filteredDisplayOptions}
-      placeholder={placeholder}
-      value={selectedValue}
-      onChange={(e) => setSelectedValue(e.value)}
-      completeMethod={handleComplete}
-      checkmark={true}
-      onFocus={handleComplete}
-      forceSelection={isDropDown}
-      field="label"
-      panelClassName="p-1 gap-2"></AutoComplete>
+    <div className="flex flex-col w-full">
+      <Dropdown
+        ref={autocompleteRef}
+        className="p-2 border border-slate-300 w-full"
+        itemTemplate={optionTemplate || defaultOptionTemplate}
+        options={displayOptions}
+        optionLabel="label"
+        placeholder={placeholder}
+        value={selectedValue}
+        onChange={selectionChange}
+        checkmark={true}
+        forceSelection={isDropDown}
+        panelClassName="p-1 gap-2"></Dropdown>
+      {error && (
+        <span className={`text-red-600 text-xs ml-2 transition-all duration-200`}>{error}</span>
+      )}
+    </div>
   );
 };
 

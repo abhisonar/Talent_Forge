@@ -1,0 +1,12 @@
+.p-calendar {
+  &:not(.p-calendar-disabled).p-focus > .p-inputtext {
+    box-shadow: none !important;
+  }
+  .p-inputtext {
+    @apply p-2 pr-6 border border-slate-300 w-full;
+  }
+}
+
+.p-datepicker-title {
+  @apply flex gap-2;
+}

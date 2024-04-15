@@ -4,7 +4,7 @@ import { getEnumsByType } from '@libs/resources/api/other/enum.api';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import React, { useState, useEffect } from 'react';
 
-const EnumSelectComponent = ({ enumType, placeholder }) => {
+const EnumSelectComponent = ({ enumType, placeholder, selectedValue, setSelectedValue, error }) => {
   const [enumData, setEnumData] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,14 @@ const EnumSelectComponent = ({ enumType, placeholder }) => {
     });
   };
   return (
-    <UiInputSelectComponenet isAsyncData={false} placeholder={placeholder} options={enumData} />
+    <UiInputSelectComponenet
+      selectedValue={selectedValue}
+      setSelectedValue={setSelectedValue}
+      isAsyncData={false}
+      placeholder={placeholder}
+      options={enumData}
+      error={error}
+    />
   );
 };
 

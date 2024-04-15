@@ -1,4 +1,4 @@
-import { UiInputText } from '@libs/design-system';
+import { UiButton, UiInputText } from '@libs/design-system';
 import {
   LoginNameValues,
   loginFormInitialValues,
@@ -8,7 +8,7 @@ import { Button } from '@shadcnui/components/ui/button';
 import { useFormik } from 'formik';
 
 // eslint-disable-next-line react/prop-types
-const CandicateLoginFormCommponent = ({ handleLoginSubmit }) => {
+const CandicateLoginFormCommponent = ({ handleLoginSubmit, isLoading }) => {
   const loginFormik = useFormik({
     initialValues: loginFormInitialValues,
     validationSchema: validateLoginSchema,
@@ -45,7 +45,9 @@ const CandicateLoginFormCommponent = ({ handleLoginSubmit }) => {
         </div>
       </div>
 
-      <Button type="submit">Sign In</Button>
+      <UiButton type="submit" isLoading={isLoading}>
+        Login
+      </UiButton>
     </form>
   );
 };

@@ -10,7 +10,7 @@ exports.listEducations = async (req, res) => {
     const tokenData = getTokenDataFromRequest(req);
     const data = await CandidateEducationCollection.find({
       user_id: tokenData.id,
-    }).populate(['educationType', 'gradingSystem']);
+    }).populate(['gradingSystem', 'educationType', 'course', 'institute']);
     if (!data) {
       return res.status(404).send({
         error: 'No education details found for the user',
@@ -22,6 +22,7 @@ exports.listEducations = async (req, res) => {
       message: 'Education details fetched successfully',
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: 'Internal server error',
     });
@@ -31,14 +32,13 @@ exports.listEducations = async (req, res) => {
 exports.addEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const { education, institute, course, since, until, gradingSystem, marks } = req.body;
+    const { educationType, institute, course, since, until, gradingSystem, marks } = req.body;
 
-    const educationEnum = await EnumModel.findOne({ code: education });
-    const gradingSystemEnum = await EnumModel.findOne({ code: gradingSystem });
+    const gradingSystemEnum = await EnumCollection.findOne({ code: gradingSystem });
 
-    const data = new CandidateEducationCollection({
+    const newData = new CandidateEducationCollection({
       user_id: tokenData?.id,
-      educationType: educationEnum?._id,
+      educationType,
       institute,
       course,
       since,
@@ -46,14 +46,14 @@ exports.addEducationDetail = async (req, res) => {
       gradingSystem: gradingSystemEnum?._id,
       marks,
     });
-    await data.save();
+    await newData.save();
     return res.status(200).send({
-      data: data || [],
+      data: newData || {},
       message: 'Education details added successfully',
     });
   } catch (error) {
     return res.status(500).send({
-      error: 'Internal server error',
+      error: error,
     });
   }
 };
@@ -61,13 +61,13 @@ exports.addEducationDetail = async (req, res) => {
 exports.updateEducationDetail = async (req, res) => {
   try {
     const tokenData = getTokenDataFromRequest(req);
-    const { education, institute, course, since, until, gradingSystem, marks } = req.body;
+    const { educationType, institute, course, since, until, gradingSystem, marks } = req.body;
     const { educationDetailId } = req.params;
     const updatedData = await CandidateEducationCollection.findOneAndUpdate(
       { _id: educationDetailId },
       {
         $set: {
-          education,
+          educationType,
           institute,
           course,
           since,

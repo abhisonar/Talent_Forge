@@ -3,16 +3,25 @@ import EnumSelectComponent from '@libs/components/utility/enum-select/enum-selec
 import { UiButton, UiInputText } from '@libs/design-system';
 import UiInputDate from '@libs/design-system/controls/ui-input-date/ui-input-date.component';
 import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.componenet';
-import { listInstitutes, listEducationType, listCourses } from '@libs/resources/api';
+import {
+  listInstitutes,
+  listEducationType,
+  listCourses,
+  addEducationDetail,
+} from '@libs/resources/api';
+import { toastApiErrorMessage } from '@libs/resources/function';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import {
   educationDeatilFormInitialValues,
   validateEducationDetailschema,
   EducationDetailNameValues,
 } from '@libs/resources/models/form/candidate/candidate-education.form';
+import { useToast } from '@shadcnui/components/ui/use-toast';
 import { useFormik } from 'formik';
 
-const EducationFormComponent = ({ educationData }) => {
+const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialogVisible }) => {
+  const { toast } = useToast();
+
   const educationDetailFormik = useFormik({
     initialValues: educationDeatilFormInitialValues,
     validationSchema: validateEducationDetailschema,
@@ -21,7 +30,26 @@ const EducationFormComponent = ({ educationData }) => {
     },
   });
   const handleEducationDetailsubmit = (values) => {
-    console.log(values);
+    if (!educationDetailFormik.isValid) return;
+
+    const formData = {
+      ...values,
+      since: new Date(values?.since).toISOString(),
+      until: new Date(values?.until).toISOString(),
+    };
+
+    setIsSaving(true);
+
+    addEducationDetail(formData)
+      .then(() => {
+        setDialogVisible(false);
+      })
+      .catch((err) => {
+        toastApiErrorMessage(toast, err);
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
   };
 
   const handleDateSelection = (name, value) => {
@@ -65,6 +93,7 @@ const EducationFormComponent = ({ educationData }) => {
             handleValueChange(EducationDetailNameValues.EDUCATION_TYPE, value)
           }
           selectedValue={educationDetailFormik.values.educationType}
+          error={educationDetailFormik.errors.educationType}
         />
         <UiInputSelectComponenet
           placeholder={'Institute'}
@@ -74,6 +103,7 @@ const EducationFormComponent = ({ educationData }) => {
             handleValueChange(EducationDetailNameValues.INSTITUTE, value)
           }
           selectedValue={educationDetailFormik.values.institute}
+          error={educationDetailFormik.errors.institute}
         />
         <UiInputSelectComponenet
           placeholder={'Courses'}
@@ -81,20 +111,31 @@ const EducationFormComponent = ({ educationData }) => {
           isAsyncData={true}
           setSelectedValue={(value) => handleValueChange(EducationDetailNameValues.COURSE, value)}
           selectedValue={educationDetailFormik.values.course}
+          error={educationDetailFormik.errors.course}
         />
         <div className="grid grid-cols-2 gap-2">
           <UiInputDate
             label={'Start Year'}
             setInputDate={(value) => handleDateSelection(EducationDetailNameValues.SINCE, value)}
             selectedDate={educationDetailFormik.values.since}
+            error={educationDetailFormik.errors.since}
           />
           <UiInputDate
             label={'End Year'}
             setInputDate={(value) => handleDateSelection(EducationDetailNameValues.UNTIL, value)}
             selectedDate={educationDetailFormik.values.until}
+            error={educationDetailFormik.errors.until}
           />
         </div>
-        <EnumSelectComponent placeholder={'Grading System'} enumType={'GRADING_SYSTEM'} />
+        <EnumSelectComponent
+          placeholder={'Grading System'}
+          enumType={'GRADING_SYSTEM'}
+          setSelectedValue={(value) =>
+            handleValueChange(EducationDetailNameValues.GRADING_SYSTEM, value)
+          }
+          selectedValue={educationDetailFormik.values.gradingSystem}
+          error={educationDetailFormik.errors.gradingSystem}
+        />
 
         <UiInputText
           id={EducationDetailNameValues.MARKS}
@@ -103,10 +144,11 @@ const EducationFormComponent = ({ educationData }) => {
           isRequired={true}
           type="text"
           onChange={educationDetailFormik.handleChange}
+          error={educationDetailFormik.errors.marks}
         />
       </div>
       <div className="flex justify-end gap-2">
-        <UiButton type="submit">
+        <UiButton type="submit" isLoading={isSaving}>
           <span className="">Save</span>
         </UiButton>
       </div>
