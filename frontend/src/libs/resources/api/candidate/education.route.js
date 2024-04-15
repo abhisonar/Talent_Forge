@@ -19,3 +19,7 @@ export const listGradingSystem = async (params) => {
 export const addEducationDetail = async (payload) => {
   return httpPost(`education-detail`, payload).then((response) => response?.data);
 };
+
+export const listEducationDetail = async () => {
+  return httpGet(`education-detail`).then((response) => response?.data);
+};

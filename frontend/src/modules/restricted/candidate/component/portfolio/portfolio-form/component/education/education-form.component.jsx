@@ -16,11 +16,15 @@ import {
   validateEducationDetailschema,
   EducationDetailNameValues,
 } from '@libs/resources/models/form/candidate/candidate-education.form';
+import { EducationContext } from '@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education.context';
 import { useToast } from '@shadcnui/components/ui/use-toast';
 import { useFormik } from 'formik';
+import { useContext } from 'react';
 
 const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialogVisible }) => {
   const { toast } = useToast();
+
+  const educationContext = useContext(EducationContext);
 
   const educationDetailFormik = useFormik({
     initialValues: educationDeatilFormInitialValues,
@@ -41,7 +45,8 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
     setIsSaving(true);
 
     addEducationDetail(formData)
-      .then(() => {
+      .then((response) => {
+        updateEducationData(response);
         setDialogVisible(false);
       })
       .catch((err) => {
@@ -50,6 +55,16 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
       .finally(() => {
         setIsSaving(false);
       });
+  };
+
+  const updateEducationData = (latestData) => {
+    const { setEducationData, educationData } = educationContext;
+
+    const data = [...educationData, latestData].sort(
+      (a, b) => new Date(b?.since).getTime() - new Date(a?.since).getTime()
+    );
+
+    setEducationData([...data]);
   };
 
   const handleDateSelection = (name, value) => {

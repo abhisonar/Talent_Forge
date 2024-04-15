@@ -12,15 +12,29 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'authentication',
+        async lazy() {
+          let AuthenticationLayout = await import(
+            './layout/authentication-layout/authentication.layout'
+          );
+          return { Component: AuthenticationLayout.default };
+        },
         element: <AuthenticationLayout />,
         children: [
           {
             path: 'login',
-            element: <LoginComponent />,
+            async lazy() {
+              let LoginComponent = await import('./modules/non-restricted/login/login.component');
+              return { Component: LoginComponent.default };
+            },
           },
           {
             path: 'registration',
-            element: <RegisterComponent />,
+            async lazy() {
+              let RegisterComponent = await import(
+                './modules/non-restricted/registration/registration.component'
+              );
+              return { Component: RegisterComponent.default };
+            },
           },
         ],
       },

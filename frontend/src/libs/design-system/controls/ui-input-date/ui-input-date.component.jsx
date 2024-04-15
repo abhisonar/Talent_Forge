@@ -19,7 +19,7 @@ const UiInputDate = ({ setInputDate, selectedDate, label, error }) => {
         value={selectedDate}
         onChange={handleDateSelection}
         placeholder={label}
-        dateFormat={DATE_FORMAT}
+        dateFormat={'dd-mm-yy'}
         showButtonBar
       />
       {error && (

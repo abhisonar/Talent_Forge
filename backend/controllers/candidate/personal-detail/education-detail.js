@@ -10,7 +10,9 @@ exports.listEducations = async (req, res) => {
     const tokenData = getTokenDataFromRequest(req);
     const data = await CandidateEducationCollection.find({
       user_id: tokenData.id,
-    }).populate(['gradingSystem', 'educationType', 'course', 'institute']);
+    })
+      .populate(['gradingSystem', 'educationType', 'course', 'institute'])
+      .sort({ since: -1 });
     if (!data) {
       return res.status(404).send({
         error: 'No education details found for the user',
@@ -47,11 +49,19 @@ exports.addEducationDetail = async (req, res) => {
       marks,
     });
     await newData.save();
+
+    const reponseData = await CandidateEducationCollection.findOne({ _id: newData?._id }).populate([
+      'gradingSystem',
+      'educationType',
+      'course',
+      'institute',
+    ]);
     return res.status(200).send({
-      data: newData || {},
+      data: reponseData || {},
       message: 'Education details added successfully',
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: error,
     });
