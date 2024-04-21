@@ -29,3 +29,17 @@ export const EducationDetailNameValues = Object.freeze({
   GRADING_SYSTEM: 'gradingSystem',
   MARKS: 'marks',
 });
+
+export class EducationFormData {
+  static mapFromHttp(httpData) {
+    const formData = new EducationFormData();
+    formData.educationType = httpData?.educationType;
+    formData.institute = httpData?.institute;
+    formData.course = httpData?.course;
+    formData.since = httpData?.since;
+    formData.until = httpData?.until;
+    formData.gradingSystem = httpData?.gradingSystem;
+    formData.marks = httpData?.marks;
+    return formData;
+  }
+}

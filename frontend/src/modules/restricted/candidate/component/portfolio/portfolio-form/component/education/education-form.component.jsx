@@ -15,24 +15,36 @@ import {
   educationDeatilFormInitialValues,
   validateEducationDetailschema,
   EducationDetailNameValues,
+  EducationFormData,
 } from '@libs/resources/models/form/candidate/candidate-education.form';
 import { EducationContext } from '@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education.context';
 import { useToast } from '@shadcnui/components/ui/use-toast';
 import { useFormik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialogVisible }) => {
   const { toast } = useToast();
 
   const educationContext = useContext(EducationContext);
 
-  const educationDetailFormik = useFormik({
+  let educationDetailFormik = useFormik({
     initialValues: educationDeatilFormInitialValues,
     validationSchema: validateEducationDetailschema,
     onSubmit: (values) => {
       handleEducationDetailsubmit(values);
     },
   });
+
+  useEffect(() => {
+    patchToFormData();
+  }, [educationData]);
+
+  const patchToFormData = () => {
+    if (!educationData) return;
+    const formData = EducationFormData.mapFromHttp(educationData);
+    educationDetailFormik.setValues(formData);
+  };
+
   const handleEducationDetailsubmit = (values) => {
     if (!educationDetailFormik.isValid) {
       return;
