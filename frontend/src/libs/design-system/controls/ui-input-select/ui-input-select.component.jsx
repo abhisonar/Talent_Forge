@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from 'react';
 import { Dropdown } from 'primereact/dropdown';
-import { AutoComplete } from 'primereact/autocomplete';
+import './ui-input-select.component.scss';
 
 const UiInputSelectComponenet = ({
   apiFun,
@@ -13,6 +13,9 @@ const UiInputSelectComponenet = ({
   optionTemplate,
   isDropDown = true,
   error,
+  onBlur,
+  id,
+  isClearable = true,
 }) => {
   const [displayOptions, setDisplayOptions] = useState([]);
   const [filteredDisplayOptions, setFilteredDisplayOptions] = useState([]);
@@ -66,7 +69,7 @@ const UiInputSelectComponenet = ({
     <div className="flex flex-col w-full">
       <Dropdown
         ref={autocompleteRef}
-        className="p-2 border border-slate-300 w-full"
+        className={`p-2 border ${!!error ? 'border-red-600' : 'border-slate-300'} w-full`}
         itemTemplate={optionTemplate || defaultOptionTemplate}
         options={displayOptions}
         optionLabel="label"
@@ -75,10 +78,17 @@ const UiInputSelectComponenet = ({
         onChange={selectionChange}
         checkmark={true}
         forceSelection={isDropDown}
+        showClear={isClearable}
+        onBlur={onBlur}
+        id={id}
         panelClassName="p-1 gap-2"></Dropdown>
-      {error && (
-        <span className={`text-red-600 text-xs ml-2 transition-all duration-200`}>{error}</span>
-      )}
+      <small
+        id={id}
+        className={`text-red-600 text-xs ml-2 transition-all duration-500 ${
+          error ? 'opacity-100' : 'opacity-0'
+        }`}>
+        {error}
+      </small>
     </div>
   );
 };

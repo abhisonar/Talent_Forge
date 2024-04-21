@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 
-export const validateEducationDetailschema = Yup.object().shape({
-  educationType: Yup.string().required('This field is required'),
-  institute: Yup.string().required('This field is required'),
-  course: Yup.string().required('This field is required'),
-  since: Yup.string().required('This field is required'),
-  until: Yup.string(),
-  gradingSystem: Yup.string().required('This field is required'),
-  marks: Yup.string().required('This field is required'),
+export const validateEducationDetailschema = Yup.object({
+  educationType: Yup.string().required('Education Type is required'),
+  institute: Yup.string().required('Institute is required'),
+  course: Yup.string().required('Course is required'),
+  since: Yup.string().required('Since Date is required'),
+  until: Yup.string().required('Until Date is required'),
+  gradingSystem: Yup.string().required('Granding System is required'),
+  marks: Yup.string().required('Marks is required'),
 });
 
 export const educationDeatilFormInitialValues = {

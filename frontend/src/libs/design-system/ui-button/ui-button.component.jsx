@@ -12,8 +12,8 @@ const UiButton = ({
   isLoading,
 }) => {
   return (
-    <Button type={type} variant={variant} onClick={onClick} className={'p-2'} icon={icon}>
-      <div className="flex items-center gap-1">
+    <Button type={type} variant={variant} onClick={onClick} className={'p-2'}>
+      <div className="flex items-center gap-2">
         {isLoading && <i className="pi pi-spin pi-spinner" style={{ fontSize: '15px' }}></i>}
         {children}
       </div>

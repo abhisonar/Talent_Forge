@@ -4,6 +4,10 @@
   }
   .p-inputtext {
     @apply p-2 pr-6 border border-slate-300 w-full;
+
+    &.control-error {
+      @apply border border-red-600;
+    }
   }
 }
 

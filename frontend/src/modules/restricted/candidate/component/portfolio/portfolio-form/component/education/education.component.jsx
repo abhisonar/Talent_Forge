@@ -54,7 +54,7 @@ const EducationComponent = () => {
         <div className="flex items-center w-full gap-3">
           <Separator className="basis-[88%] " />
           <UiButton onClick={() => setOpenAddEducationDialog(true)} className={'text-base'}>
-            Add Button
+            Add Education
           </UiButton>
           <UiDialog
             isVisible={openAddEducationDialog}

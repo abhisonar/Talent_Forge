@@ -2,7 +2,7 @@
 import EnumSelectComponent from '@libs/components/utility/enum-select/enum-select.component';
 import { UiButton, UiInputText } from '@libs/design-system';
 import UiInputDate from '@libs/design-system/controls/ui-input-date/ui-input-date.component';
-import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.componenet';
+import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
 import {
   listInstitutes,
   listEducationType,
@@ -34,7 +34,9 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
     },
   });
   const handleEducationDetailsubmit = (values) => {
-    if (!educationDetailFormik.isValid) return;
+    if (!educationDetailFormik.isValid) {
+      return;
+    }
 
     const formData = {
       ...values,
@@ -107,39 +109,47 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
           setSelectedValue={(value) =>
             handleValueChange(EducationDetailNameValues.EDUCATION_TYPE, value)
           }
+          onBlur={educationDetailFormik.handleBlur}
           selectedValue={educationDetailFormik.values.educationType}
-          error={educationDetailFormik.errors.educationType}
+          error={
+            educationDetailFormik.touched.educationType &&
+            educationDetailFormik.errors.educationType
+          }
         />
         <UiInputSelectComponenet
           placeholder={'Institute'}
           apiFun={getInstituteList}
           isAsyncData={true}
+          onBlur={educationDetailFormik.handleBlur}
           setSelectedValue={(value) =>
             handleValueChange(EducationDetailNameValues.INSTITUTE, value)
           }
           selectedValue={educationDetailFormik.values.institute}
-          error={educationDetailFormik.errors.institute}
+          error={educationDetailFormik.touched.institute && educationDetailFormik.errors.institute}
         />
         <UiInputSelectComponenet
           placeholder={'Courses'}
           apiFun={getCourseList}
           isAsyncData={true}
+          onBlur={educationDetailFormik.handleBlur}
           setSelectedValue={(value) => handleValueChange(EducationDetailNameValues.COURSE, value)}
           selectedValue={educationDetailFormik.values.course}
-          error={educationDetailFormik.errors.course}
+          error={educationDetailFormik.touched.course && educationDetailFormik.errors.course}
         />
         <div className="grid grid-cols-2 gap-2">
           <UiInputDate
             label={'Start Year'}
             setInputDate={(value) => handleDateSelection(EducationDetailNameValues.SINCE, value)}
             selectedDate={educationDetailFormik.values.since}
-            error={educationDetailFormik.errors.since}
+            onBlur={educationDetailFormik.touched.since && educationDetailFormik.handleBlur}
+            error={educationDetailFormik.touched.since && educationDetailFormik.errors.since}
           />
           <UiInputDate
             label={'End Year'}
             setInputDate={(value) => handleDateSelection(EducationDetailNameValues.UNTIL, value)}
             selectedDate={educationDetailFormik.values.until}
-            error={educationDetailFormik.errors.until}
+            onBlur={educationDetailFormik.handleBlur}
+            error={educationDetailFormik.touched.until && educationDetailFormik.errors.until}
           />
         </div>
         <EnumSelectComponent
@@ -148,18 +158,21 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
           setSelectedValue={(value) =>
             handleValueChange(EducationDetailNameValues.GRADING_SYSTEM, value)
           }
+          onBlur={educationDetailFormik.handleBlur}
           selectedValue={educationDetailFormik.values.gradingSystem}
-          error={educationDetailFormik.errors.gradingSystem}
+          error={
+            educationDetailFormik.touched.gradingSystem &&
+            educationDetailFormik.errors.gradingSystem
+          }
         />
-
         <UiInputText
           id={EducationDetailNameValues.MARKS}
           placeholder={'Marks'}
           name={EducationDetailNameValues.MARKS}
-          isRequired={true}
-          type="text"
+          type="number"
           onChange={educationDetailFormik.handleChange}
-          error={educationDetailFormik.errors.marks}
+          onBlur={educationDetailFormik.handleBlur}
+          error={educationDetailFormik.touched.marks && educationDetailFormik.errors.marks}
         />
       </div>
       <div className="flex justify-end gap-2">

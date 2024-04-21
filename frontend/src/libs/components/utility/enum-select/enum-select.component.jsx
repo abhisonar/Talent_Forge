@@ -1,10 +1,17 @@
 /* eslint-disable react/prop-types */
-import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.componenet';
+import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
 import { getEnumsByType } from '@libs/resources/api/other/enum.api';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import React, { useState, useEffect } from 'react';
 
-const EnumSelectComponent = ({ enumType, placeholder, selectedValue, setSelectedValue, error }) => {
+const EnumSelectComponent = ({
+  enumType,
+  placeholder,
+  selectedValue,
+  setSelectedValue,
+  error,
+  onBlur,
+}) => {
   const [enumData, setEnumData] = useState([]);
 
   useEffect(() => {
@@ -26,6 +33,7 @@ const EnumSelectComponent = ({ enumType, placeholder, selectedValue, setSelected
       placeholder={placeholder}
       options={enumData}
       error={error}
+      onBlur={onBlur}
     />
   );
 };

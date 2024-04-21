@@ -1,7 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import EducationComponent from './portfolio-form/component/education/education.component';
 import PortfolioComponenet from './portfolio.component';
-import { lazy } from 'react';
 
 export const portfolioRoute = [
   {
