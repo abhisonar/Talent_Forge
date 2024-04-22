@@ -5,12 +5,10 @@ import { router } from './app.route.jsx';
 
 import { PrimeReactProvider } from 'primereact/api';
 
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; //theme
-import 'primereact/resources/primereact.min.css'; //core css
-import 'primeicons/primeicons.css'; //icons
+import Tailwind from 'primereact/passthrough/tailwind';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <PrimeReactProvider>
+  <PrimeReactProvider value={{ pt: Tailwind }}>
     <RouterProvider router={router} />
   </PrimeReactProvider>
 );

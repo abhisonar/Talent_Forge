@@ -69,7 +69,6 @@ const UiInputSelectComponenet = ({
     <div className="flex flex-col w-full">
       <Dropdown
         ref={autocompleteRef}
-        className={`p-2 border ${!!error ? 'border-red-600' : 'border-slate-300'} w-full`}
         itemTemplate={optionTemplate || defaultOptionTemplate}
         options={displayOptions}
         optionLabel="label"
@@ -80,8 +79,7 @@ const UiInputSelectComponenet = ({
         forceSelection={isDropDown}
         showClear={isClearable}
         onBlur={onBlur}
-        id={id}
-        panelClassName="p-1 gap-2"></Dropdown>
+        id={id}></Dropdown>
       <small
         id={id}
         className={`text-red-600 text-xs ml-2 transition-all duration-500 ${

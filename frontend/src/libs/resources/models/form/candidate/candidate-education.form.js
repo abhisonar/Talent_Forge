@@ -11,6 +11,7 @@ export const validateEducationDetailschema = Yup.object({
 });
 
 export const educationDeatilFormInitialValues = {
+  id: null,
   educationType: null,
   institute: null,
   course: null,
@@ -33,12 +34,13 @@ export const EducationDetailNameValues = Object.freeze({
 export class EducationFormData {
   static mapFromHttp(httpData) {
     const formData = new EducationFormData();
-    formData.educationType = httpData?.educationType;
-    formData.institute = httpData?.institute;
-    formData.course = httpData?.course;
+    formData.id = httpData?._id;
+    formData.educationType = httpData?.educationType?._id;
+    formData.institute = httpData?.institute?._id;
+    formData.course = httpData?.course?._id;
     formData.since = httpData?.since;
     formData.until = httpData?.until;
-    formData.gradingSystem = httpData?.gradingSystem;
+    formData.gradingSystem = httpData?.gradingSystem?.code;
     formData.marks = httpData?.marks;
     return formData;
   }

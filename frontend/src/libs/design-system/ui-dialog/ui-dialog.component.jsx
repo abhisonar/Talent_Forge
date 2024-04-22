@@ -26,29 +26,11 @@ const UiDialog = ({
   dialogHeight,
 }) => {
   return (
-    // <Dialog>
-    //   <DialogTrigger asChild>
-    //     {triggerTemplateFun ? triggerTemplateFun : <UiButton>{triggerLabel}</UiButton>}
-    //   </DialogTrigger>
-    //   <DialogContent className={`${DIALOG_WIDTH_ALIAS[dialogWidth]}`}>
-    //     <DialogHeader>
-    //       <DialogTitle>{title}</DialogTitle>
-    //       <DialogDescription>{description}</DialogDescription>
-    //     </DialogHeader>
-    //     {children}
-    //     {/* <DialogFooter>
-    //       { footerTemplateFun ? footerTemplateFun() : ( <UiButton type="submit" onClick={() => saveFun()}>
-    //         {saveBtnTitle || "Save"}
-    //       </UiButton>
-    //       ) }
-    //     </DialogFooter> */}
-    //   </DialogContent>
-    // </Dialog>
     <Dialog
       onHide={() => setVisible(false)}
       visible={isVisible}
       header={title}
-      className={`p-4 bg-white ${DIALOG_WIDTH_ALIAS[dialogWidth]}`}>
+      className={` bg-white ${DIALOG_WIDTH_ALIAS[dialogWidth]}`}>
       <div className="py-2">{children}</div>
     </Dialog>
   );

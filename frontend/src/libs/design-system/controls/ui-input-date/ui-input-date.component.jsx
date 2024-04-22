@@ -11,8 +11,7 @@ const UiInputDate = ({ setInputDate, selectedDate, label, error, onBlur }) => {
   return (
     <div className="flex flex-col">
       <Calendar
-        inputClassName={error ? 'control-error border border-red-600' : ''}
-        value={selectedDate}
+        value={selectedDate ? new Date(selectedDate) : undefined}
         onChange={handleDateSelection}
         placeholder={label}
         dateFormat={'dd-mm-yy'}

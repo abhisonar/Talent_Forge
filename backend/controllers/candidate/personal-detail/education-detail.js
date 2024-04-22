@@ -73,6 +73,9 @@ exports.updateEducationDetail = async (req, res) => {
     const tokenData = getTokenDataFromRequest(req);
     const { educationType, institute, course, since, until, gradingSystem, marks } = req.body;
     const { educationDetailId } = req.params;
+
+    const gradingSystemEnum = await EnumCollection.findOne({ code: gradingSystem });
+
     const updatedData = await CandidateEducationCollection.findOneAndUpdate(
       { _id: educationDetailId },
       {
@@ -82,12 +85,12 @@ exports.updateEducationDetail = async (req, res) => {
           course,
           since,
           until,
-          gradingSystem,
+          gradingSystem: gradingSystemEnum?._id,
           marks,
         },
       },
       { new: true }
-    );
+    ).populate(['gradingSystem', 'educationType', 'course', 'institute']);
 
     if (!updatedData) {
       return res.status(404).send({
@@ -99,6 +102,7 @@ exports.updateEducationDetail = async (req, res) => {
       message: 'Education detail updated successfully',
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: 'Internal server error',
     });

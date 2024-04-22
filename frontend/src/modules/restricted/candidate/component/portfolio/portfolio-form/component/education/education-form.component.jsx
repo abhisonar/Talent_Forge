@@ -8,8 +8,9 @@ import {
   listEducationType,
   listCourses,
   addEducationDetail,
+  udpateEducationDetail,
 } from '@libs/resources/api';
-import { toastApiErrorMessage } from '@libs/resources/function';
+import { toastApiErrorMessage, toastSuccessMessage } from '@libs/resources/function';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import {
   educationDeatilFormInitialValues,
@@ -22,7 +23,13 @@ import { useToast } from '@shadcnui/components/ui/use-toast';
 import { useFormik } from 'formik';
 import { useContext, useEffect } from 'react';
 
-const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialogVisible }) => {
+const EducationFormComponent = ({
+  educationData,
+  editIndex = -1,
+  setIsSaving,
+  isSaving,
+  setDialogVisible,
+}) => {
   const { toast } = useToast();
 
   const educationContext = useContext(EducationContext);
@@ -58,9 +65,14 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
 
     setIsSaving(true);
 
-    addEducationDetail(formData)
+    let promise$ = values?.id
+      ? udpateEducationDetail(values?.id, formData)
+      : addEducationDetail(formData);
+
+    promise$
       .then((response) => {
         updateEducationData(response);
+        toastSuccessMessage(toast);
         setDialogVisible(false);
       })
       .catch((err) => {
@@ -73,12 +85,14 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
 
   const updateEducationData = (latestData) => {
     const { setEducationData, educationData } = educationContext;
-
-    const data = [...educationData, latestData].sort(
-      (a, b) => new Date(b?.since).getTime() - new Date(a?.since).getTime()
-    );
-
-    setEducationData([...data]);
+    if (editIndex !== -1) {
+      educationData.splice(editIndex, 1, latestData);
+    } else {
+      const data = [...educationData, latestData].sort(
+        (a, b) => new Date(b?.since).getTime() - new Date(a?.since).getTime()
+      );
+      setEducationData([...data]);
+    }
   };
 
   const handleDateSelection = (name, value) => {
@@ -178,17 +192,17 @@ const EducationFormComponent = ({ educationData, setIsSaving, isSaving, setDialo
           }
         />
         <UiInputText
+          value={educationDetailFormik.values.marks}
           id={EducationDetailNameValues.MARKS}
           placeholder={'Marks'}
           name={EducationDetailNameValues.MARKS}
-          type="number"
           onChange={educationDetailFormik.handleChange}
           onBlur={educationDetailFormik.handleBlur}
           error={educationDetailFormik.touched.marks && educationDetailFormik.errors.marks}
         />
       </div>
       <div className="flex justify-end gap-2">
-        <UiButton type="submit" isLoading={isSaving}>
+        <UiButton type="submit" isLoading={isSaving} icon={'pi-check'}>
           <span className="">Save</span>
         </UiButton>
       </div>

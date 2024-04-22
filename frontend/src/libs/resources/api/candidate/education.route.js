@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from '@libs/resources/api/base.api';
+import { httpGet, httpPost, httpPut } from '@libs/resources/api/base.api';
 
 export const listInstitutes = async (params) => {
   return httpGet(`institutes`, params).then((response) => response?.data);
@@ -18,6 +18,10 @@ export const listGradingSystem = async (params) => {
 
 export const addEducationDetail = async (payload) => {
   return httpPost(`education-detail`, payload).then((response) => response?.data);
+};
+
+export const udpateEducationDetail = async (eduationId, payload) => {
+  return httpPut(`education-detail/${eduationId}`, payload).then((response) => response?.data);
 };
 
 export const listEducationDetail = async () => {

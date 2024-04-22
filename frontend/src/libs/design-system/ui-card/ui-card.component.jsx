@@ -4,15 +4,15 @@ import { Card } from 'primereact/card';
 const UiCard = ({ children, title, ctaTemplate }) => {
   const titleTemplate = () => {
     return (
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-between max-h-10">
         <span className="text-xl">{title}</span>
-        <div className="p-1">{ctaTemplate && ctaTemplate()}</div>
+        <div className="p-2">{ctaTemplate && ctaTemplate()}</div>
       </div>
     );
   };
 
   return (
-    <Card title={titleTemplate} className="p-4">
+    <Card title={titleTemplate} className="">
       {children}
     </Card>
   );

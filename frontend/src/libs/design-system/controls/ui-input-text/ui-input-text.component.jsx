@@ -7,6 +7,7 @@ const UiInputText = ({
   id,
   type = 'text',
   name,
+  value,
   isRequired = false,
   onChange,
   onBlur,
@@ -19,6 +20,7 @@ const UiInputText = ({
           id={id}
           name={name}
           type={type}
+          value={value}
           aria-describedby={id}
           placeholder={placeholder}
           onChange={onChange}
