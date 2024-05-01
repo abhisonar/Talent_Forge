@@ -1,4 +1,4 @@
-import { httpGet, httpPost, httpPut } from '@libs/resources/api/base.api';
+import { httpDelete, httpGet, httpPost, httpPut } from '@libs/resources/api/base.api';
 
 export const listInstitutes = async (params) => {
   return httpGet(`institutes`, params).then((response) => response?.data);
@@ -26,4 +26,10 @@ export const udpateEducationDetail = async (eduationId, payload) => {
 
 export const listEducationDetail = async () => {
   return httpGet(`education-detail`).then((response) => response?.data);
+};
+
+export const deleteEducationDetailApi = async (eduationId, payload) => {
+  return httpDelete(`education-detail/${eduationId}`, payload).then(
+    (response) => response?.data
+  );
 };

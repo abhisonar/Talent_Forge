@@ -1,15 +1,21 @@
-import { Separator } from '@shadcnui/components/ui/separator';
-import EducationFormComponent from './education-form.component';
-import UiDialog from '@libs/design-system/ui-dialog/ui-dialog.component';
-import { useState, useEffect } from 'react';
-import { UiButton } from '@libs/design-system';
-import { listEducationDetail } from '@libs/resources/api';
-import { useToast } from '@shadcnui/components/ui/use-toast';
-import { toastApiErrorMessage } from '@libs/resources/function';
-import EducationViewCompnent from '@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education-view.component';
-import { EducationContext } from '@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education.context';
-import { Divider } from 'primereact/divider';
-import { Skeleton } from 'primereact/skeleton';
+import { Separator } from "@shadcnui/components/ui/separator";
+import EducationFormComponent from "./education-form.component";
+import UiDialog from "@libs/design-system/ui-dialog/ui-dialog.component";
+import { useState, useEffect } from "react";
+import { UiButton } from "@libs/design-system";
+import {
+  deleteEducationDetailApi,
+  listEducationDetail,
+} from "@libs/resources/api";
+import { useToast } from "@shadcnui/components/ui/use-toast";
+import {
+  toastApiErrorMessage,
+  toastSuccessMessage,
+} from "@libs/resources/function";
+import EducationViewCompnent from "@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education-view.component";
+import { EducationContext } from "@modules/restricted/candidate/component/portfolio/portfolio-form/component/education/education.context";
+import { Divider } from "primereact/divider";
+import { Skeleton } from "primereact/skeleton";
 
 const EducationComponent = () => {
   const [openAddEducationDialog, setOpenAddEducationDialog] = useState(false);
@@ -30,6 +36,18 @@ const EducationComponent = () => {
     setEducationDetail(data);
     setEditIndex(index);
     setOpenAddEducationDialog(true);
+  };
+
+  const deleteEducationDetail = (data, index) => {
+    if (!data?._id) return;
+    deleteEducationDetailApi(data._id)
+      .then(() => {
+        educationData.splice(index, 1);
+        toastSuccessMessage(toast, "Delete Successfully");
+      })
+      .catch((err) => {
+        toastApiErrorMessage(toast, err);
+      });
   };
 
   const getEducationDetails = async () => {
@@ -81,23 +99,31 @@ const EducationComponent = () => {
   };
 
   return (
-    <EducationContext.Provider value={{ educationData, setEducationData, editEducationDetail }}>
+    <EducationContext.Provider
+      value={{
+        educationData,
+        setEducationData,
+        editEducationDetail,
+        deleteEducationDetail,
+      }}
+    >
       <div className="w-full flex flex-col gap-2 py-3">
         <div className="flex items-center w-full gap-3">
           <Divider align="right">
             <UiButton
               onClick={() => setOpenAddEducationDialog(true)}
-              className={'text-sm'}
-              icon={'pi-plus'}
-              label={'Add Education'}
+              className={"text-sm"}
+              icon={"pi-plus"}
+              label={"Add Education"}
             />
           </Divider>
           <UiDialog
             isVisible={openAddEducationDialog}
             setVisible={setOpenAddEducationDialog}
             title="Add Education"
-            dialogWidth={'xl'}
-            dialogHeight={'xl'}>
+            dialogWidth={"xl"}
+            dialogHeight={"xl"}
+          >
             {getEducationForm()}
           </UiDialog>
         </div>
@@ -105,7 +131,11 @@ const EducationComponent = () => {
           {!isLoading ? (
             <>
               {educationData.map((item, index) => (
-                <EducationViewCompnent educationDetail={item} key={index} index={index} />
+                <EducationViewCompnent
+                  educationDetail={item}
+                  key={index}
+                  index={index}
+                />
               ))}
             </>
           ) : (
