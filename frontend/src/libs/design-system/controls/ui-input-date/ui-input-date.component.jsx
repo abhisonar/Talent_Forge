@@ -1,46 +1,27 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
 
-import { cn } from '@shadcnui/lib/utils';
-import { Button } from '@shadcnui/components/ui/button';
-import { Calendar } from '@shadcnui/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@shadcnui/components/ui/popover';
-import UiButton from '@libs/design-system/ui-button/ui-button.component';
+import { Calendar } from 'primereact/calendar';
 
-const UiInputDate = ({ setInputDate, selectedDate, label }) => {
-  const [date, setDate] = React.useState();
+import './ui-input-date.component.scss';
 
-  const handleDateSelection = (date) => {
-    setInputDate(date);
+const UiInputDate = ({ setInputDate, selectedDate, label, error, onBlur }) => {
+  const handleDateSelection = (e) => {
+    setInputDate(e?.value);
   };
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={'outline'}
-          className={cn(
-            'w-full justify-start text-left font-normal',
-            !selectedDate && 'text-muted-foreground'
-          )}>
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {selectedDate ? (
-            format(selectedDate, 'dd-MM-yyyy')
-          ) : (
-            <span>{label || 'Pick a date'} </span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={handleDateSelection}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="flex flex-col">
+      <Calendar
+        value={selectedDate ? new Date(selectedDate) : undefined}
+        onChange={handleDateSelection}
+        placeholder={label}
+        dateFormat={'dd-mm-yy'}
+        showButtonBar
+        onBlur={onBlur}
+      />
+      {error && (
+        <span className={`text-red-600 text-xs ml-2 transition-all duration-200`}>{error}</span>
+      )}
+    </div>
   );
 };
 

@@ -37,7 +37,9 @@ exports.register = async (req, res) => {
 
     // Respond with success message and token
     res.json({
-      id: user._id,
+      data: {
+        id: user._id,
+      },
       success: true,
       message: 'Registration completed successfully! Please check your email for verification.',
     });

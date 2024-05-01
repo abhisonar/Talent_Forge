@@ -1,0 +1,18 @@
+.p-button {
+  @apply flex items-center outline-none focus-within:border-none h-full gap-1;
+
+  &.no-label .p-button-label {
+    display: none;
+  }
+
+  &.icon-button {
+    @apply w-full h-full;
+  }
+  &:focus {
+    outline: none;
+    border: none;
+  }
+  .p-button-icon {
+    @apply mr-0;
+  }
+}

@@ -1,15 +1,18 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-
-} from '@shadcnui/components/ui/dialog';
-import { UiButton } from '..';
+/* eslint-disable react/prop-types */
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from '@shadcnui/components/ui/dialog';
+import { Dialog } from 'primereact/dialog';
+import { DIALOG_HEIGHT_ALIAS, DIALOG_WIDTH_ALIAS, UiButton } from '..';
 
 const UiDialog = ({
+  isVisible = false,
+  setVisible,
   triggerTemplateFun,
   contentTemplatefun,
   footerTemplateFun,
@@ -20,25 +23,15 @@ const UiDialog = ({
   description,
   children,
   dialogWidth,
+  dialogHeight,
 }) => {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {triggerTemplateFun ? triggerTemplateFun : <UiButton>{triggerLabel}</UiButton>}
-      </DialogTrigger>
-      <DialogContent className={dialogWidth}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        {children}
-        {/* <DialogFooter>
-          { footerTemplateFun ? footerTemplateFun() : ( <UiButton type="submit" onClick={() => saveFun()}>
-            {saveBtnTitle || "Save"}
-          </UiButton>
-          ) }
-        </DialogFooter> */}
-      </DialogContent>
+    <Dialog
+      onHide={() => setVisible(false)}
+      visible={isVisible}
+      header={title}
+      className={` bg-white ${DIALOG_WIDTH_ALIAS[dialogWidth]}`}>
+      <div className="py-2">{children}</div>
     </Dialog>
   );
 };

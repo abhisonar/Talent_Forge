@@ -1,5 +1,4 @@
 import { Navigate } from 'react-router-dom';
-import EducationComponent from './portfolio-form/component/education/education.component';
 import PortfolioComponenet from './portfolio.component';
 
 export const portfolioRoute = [
@@ -13,19 +12,24 @@ export const portfolioRoute = [
       },
       {
         path: 'education',
-        element: <EducationComponent />,
+        lazy: async () => {
+          let EducationComponent = await import(
+            './portfolio-form/component/education/education.component'
+          );
+          return { Component: EducationComponent.default };
+        },
       },
       {
         path: 'experience',
-        element: <EducationComponent />,
+        element: <h1>Experience</h1>,
       },
       {
         path: 'skills',
-        element: <EducationComponent />,
+        element: <h1>Skills</h1>,
       },
       {
         path: 'certifications',
-        element: <EducationComponent />,
+        element: <h1>certifications</h1>,
       },
     ],
   },

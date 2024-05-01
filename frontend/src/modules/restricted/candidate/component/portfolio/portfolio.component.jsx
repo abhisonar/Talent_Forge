@@ -1,26 +1,44 @@
 import { Tabs, TabsList, TabsTrigger } from '@shadcnui/components/ui/tabs';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import UiTab from '@libs/design-system/ui-tab/ui-tab.component';
+import UiTabMenu from '@libs/design-system/ui-tab-menu/ui-tab-menu.component';
 
 const PortfolioComponenet = () => {
   const navigate = useNavigate();
 
+  const [items, setItems] = useState([
+    {
+      label: 'Education',
+      link: 'education',
+      icon: 'pi pi-graduation-cap',
+    },
+    {
+      label: 'Experience',
+      link: 'experience',
+      icon: 'pi pi-briefcase',
+    },
+    {
+      label: 'Skills',
+      link: 'skills',
+      icon: 'pi pi-code',
+    },
+    {
+      label: 'Certifications',
+      link: 'certifications',
+      icon: 'pi pi-list-check',
+    },
+  ]);
+
   useEffect(() => {}, []);
 
   const handleTabChange = (value) => {
-    navigate(`${value}`);
+    navigate(`${value?.link}`);
   };
 
   return (
     <div className="mt-5">
-      <Tabs defaultValue="education" className="w-full" onValueChange={handleTabChange}>
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="education">Education</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="skills">Skills</TabsTrigger>
-          <TabsTrigger value="certifications">Certifications</TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <UiTabMenu items={items} onTabChange={handleTabChange} />
       <Outlet />
     </div>
   );

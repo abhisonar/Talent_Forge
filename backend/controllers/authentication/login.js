@@ -1,18 +1,18 @@
-const UserCollection = require("../../models/user/user");
-const bcrypt = require("bcrypt");
-const { generateToken } = require("../../utils/generatetoken");
-const jwt = require("jsonwebtoken");
+const UserCollection = require('../../models/user/user');
+const bcrypt = require('bcrypt');
+const { generateToken } = require('../../utils/generatetoken');
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
   try {
     const { login_email, login_password } = req.body;
 
     // Find user by email
-    const user = await UserCollection.findOne({ email: login_email }).populate("role");
+    const user = await UserCollection.findOne({ email: login_email }).populate('role');
     if (!user) {
       // If user not found, return error
       return res.status(400).json({
-        message: "The email you entered is not connected to an account",
+        message: 'The email you entered is not connected to an account',
       });
     }
 
@@ -21,18 +21,20 @@ exports.login = async (req, res) => {
     if (!passwordMatch) {
       // If passwords don't match, return error
       return res.status(400).json({
-        message: "Invalid credentials. Please try again.",
+        message: 'Invalid credentials. Please try again.',
       });
     }
 
     // Generate JWT token for user authentication
     const token = generateToken(
       { id: user?._id?.toString(), role: user?.role?.code?.toString() },
-      "7d"
+      '7d'
     );
     return res.status(200).json({
-      token,
-      message: "Login success!",
+      data: {
+        token,
+      },
+      message: 'Login success!',
       success: true,
     });
   } catch (error) {
@@ -54,11 +56,14 @@ exports.currentUser = async (req, res) => {
       });
     }
     return res.status(200).json({
-      id: check._id,
-      useremail: check.email,
-      username: check.username,
-      verified: check.verified,
-      success: true,
+      data: {
+        id: check._id,
+        useremail: check.email,
+        username: check.username,
+        verified: check.verified,
+        success: true,
+      },
+      message: 'Current User fetched successfully',
     });
   } catch (error) {
     // Handle errors

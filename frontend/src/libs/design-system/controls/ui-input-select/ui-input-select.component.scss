@@ -1,0 +1,18 @@
+.p-dropdown {
+  @apply w-full relative;
+  .p-dropdown-label {
+    @apply p-2;
+  }
+  .p-dropdown-clear-icon {
+    top: 70%;
+    transform: translate(0, -50%);
+    outline: none;
+    @apply w-3 h-3;
+  }
+}
+
+.p-dropdown-panel {
+  .p-dropdown-item {
+    @apply p-1.5;
+  }
+}
