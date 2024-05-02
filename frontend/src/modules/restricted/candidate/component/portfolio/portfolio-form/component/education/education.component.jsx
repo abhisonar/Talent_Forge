@@ -1,4 +1,4 @@
-import { Separator } from "@shadcnui/components/ui/separator";
+
 import EducationFormComponent from "./education-form.component";
 import UiDialog from "@libs/design-system/ui-dialog/ui-dialog.component";
 import { useState, useEffect } from "react";
