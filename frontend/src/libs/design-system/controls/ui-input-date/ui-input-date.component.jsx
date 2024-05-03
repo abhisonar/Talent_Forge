@@ -4,12 +4,12 @@ import { Calendar } from 'primereact/calendar';
 
 import './ui-input-date.component.scss';
 
-const UiInputDate = ({ setInputDate, selectedDate, label, error, onBlur }) => {
+const UiInputDate = ({ setInputDate, selectedDate, label, error, onBlur, className }) => {
   const handleDateSelection = (e) => {
     setInputDate(e?.value);
   };
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${className}`}>
       <Calendar
         value={selectedDate ? new Date(selectedDate) : undefined}
         onChange={handleDateSelection}

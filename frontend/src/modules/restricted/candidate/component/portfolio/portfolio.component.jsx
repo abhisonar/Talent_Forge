@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Tabs, TabsList, TabsTrigger } from '@shadcnui/components/ui/tabs';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
