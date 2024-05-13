@@ -7,7 +7,7 @@ export const validateExperienceDetailschema = Yup.object({
     companyId: Yup.string().required('Company is required'),
     companyName: Yup.string(),
     courseId: Yup.string().required("Course is required"),
-    since: Yup.string().required("Since Date is required"),
+    since: Yup.string().required("Since Date is required").nullable(),
     isCurrentlyWorking: Yup.boolean(),
     until: Yup.string().nullable().when(
         'isCurrentlyWorking',

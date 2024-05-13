@@ -22,21 +22,21 @@ const ExperienceComponent = () => {
   const [editIndex, setEditIndex] = useState(-1);
 
   const [experienceData, setExperienceData] = useState([]);
-  const [experienceDetail, setExperienceDetail] = useState({});
+  const [experienceDetail, setExperienceDetail] = useState(null);
 
   const { toast } = useToast();
 
   useEffect(() => {
-    getexperienceDetails();
+    listExperiences();
   }, []);
 
-  const editexperienceDetail = (data, index) => {
+  const editExperienceDetail = (data, index) => {
     setExperienceDetail(data);
     setEditIndex(index);
     setOpenAddDialog(true);
   };
 
-  const deleteexperienceDetail = (data, index) => {
+  const deleteExperienceDetail = (data, index) => {
     if (!data?._id) return;
     deleteExperienceDetailApi(data._id)
       .then(() => {
@@ -48,7 +48,7 @@ const ExperienceComponent = () => {
       });
   };
 
-  const getexperienceDetails = async () => {
+  const listExperiences = async () => {
     setIsLoading(true);
 
     listExperiencesApi()
@@ -101,8 +101,8 @@ const ExperienceComponent = () => {
       value={{
         experienceData,
         setExperienceData,
-        editexperienceDetail,
-        deleteexperienceDetail,
+        editExperienceDetail,
+        deleteExperienceDetail,
       }}
     >
       <div className="w-full flex flex-col gap-2 py-3">

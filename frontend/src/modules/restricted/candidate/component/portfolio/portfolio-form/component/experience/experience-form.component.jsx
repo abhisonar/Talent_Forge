@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { UiButton } from "@libs/design-system";
 import UiInputDate from "@libs/design-system/controls/ui-input-date/ui-input-date.component";
-import UiInputSelectComponenet from "@libs/design-system/controls/ui-input-select/ui-input-select.component";
+import UiInputSelectComponent from "@libs/design-system/controls/ui-input-select/ui-input-select.component";
 import {
+  getCurrentUTCDateTime,
   toastApiErrorMessage,
   toastSuccessMessage,
 } from "@libs/resources/function";
@@ -147,7 +148,7 @@ const ExperienceFormComponent = ({
       onSubmit={experienceDetailFormik.handleSubmit}
     >
       <div className="grid grid-cols-1 gap-2">
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
           placeholder={"Designation"}
           apiFun={getDesignationList}
           isAsyncData={true}
@@ -161,7 +162,7 @@ const ExperienceFormComponent = ({
             experienceDetailFormik.errors.designationId
           }
         />
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
           placeholder={"Company"}
           apiFun={getCompanyList}
           isAsyncData={true}
@@ -176,7 +177,7 @@ const ExperienceFormComponent = ({
           }
         />
 
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
             placeholder={"Course"}
             apiFun={getCourseList}
             isAsyncData={true}

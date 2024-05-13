@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import './ui-input-select.component.scss';
 
-const UiInputSelectComponenet = ({
+const UiInputSelectComponent = ({
   apiFun,
   placeholder,
   options,
@@ -91,4 +91,4 @@ const UiInputSelectComponenet = ({
   );
 };
 
-export default UiInputSelectComponenet;
+export default UiInputSelectComponent;

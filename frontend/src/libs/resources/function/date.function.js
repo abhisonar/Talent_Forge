@@ -25,7 +25,7 @@ export function setDayjsLocaleWithTimezone(date = undefined, currentFormat = und
     return setDayjsLocale(date, currentFormat).tz(getCurrentTimezone())
 }
 
-export function getCurrentUTCDateTIme(format = undefined) {
+export function getCurrentUTCDateTime(format = undefined) {
     return setDayjsLocaleWithTimezone().utc().format(format);
 }
 
