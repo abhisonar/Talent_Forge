@@ -39,6 +39,7 @@ exports.addExperienceDetail = async (req, res) => {
       designationId,
       companyName,
       companyId,
+      courseId,
       since,
       until,
       isCurrentlyWorking,
@@ -51,6 +52,7 @@ exports.addExperienceDetail = async (req, res) => {
       designationId,
       companyName,
       companyId,
+      courseId,
       since,
       until,
       isCurrentlyWorking,
@@ -58,11 +60,11 @@ exports.addExperienceDetail = async (req, res) => {
     });
     await newData.save();
 
-    const reponseData = await CandidateExperienceCollection.findOne({
+    const responseData = await CandidateExperienceCollection.findOne({
       _id: newData?._id,
-    }).populate(["companyId", "designationId"]);
+    }).populate(["companyId", "designationId", "courseId"]);
     return res.status(200).send({
-      data: reponseData || {},
+      data: responseData || {},
       message: "Experience details added successfully",
     });
   } catch (error) {

@@ -10,19 +10,18 @@ const experienceSchema = new mongoose.Schema({
     type: ObjectId,
     ref: "DesignationCollection",
     default: null,
+    required: true
   },
   designationTitle: {
     type: String,
-    required: true,
     maxLength: 100,
   },
   companyName: {
     type: String,
-    required: true,
     maxLength: 100,
   },
-
-  companyId: { type: ObjectId, ref: "CompanyCollection", default: null },
+  companyId: { type: ObjectId, ref: "CompanyCollection", default: null, required: true },
+  courseId: { type: ObjectId, ref: "CourseCollection", default: null, required: true },
   isCurrentlyWorking: { type: Boolean, required: true, default: false },
   since: { type: Date, required: true },
   until: {
@@ -31,7 +30,7 @@ const experienceSchema = new mongoose.Schema({
       return !this.isCurrentlyWorking;
     },
   },
-  location: { type: Date, required: true },
+  location: { type: String },
   description: { type: String, maxLength: 500 },
 });
 

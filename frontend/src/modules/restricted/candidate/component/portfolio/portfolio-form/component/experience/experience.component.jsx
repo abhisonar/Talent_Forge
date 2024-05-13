@@ -118,7 +118,7 @@ const ExperienceComponent = () => {
           <UiDialog
             isVisible={openAddDialog}
             setVisible={setOpenAddDialog}
-            title="Add Education"
+            title="Add Experience"
             dialogWidth={"xl"}
             dialogHeight={"xl"}
           >

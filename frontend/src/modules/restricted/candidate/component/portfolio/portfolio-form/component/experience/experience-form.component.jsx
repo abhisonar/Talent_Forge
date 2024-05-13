@@ -10,7 +10,7 @@ import { useToast } from "@shadcnui/components/ui/use-toast";
 import { useFormik } from "formik";
 import { useContext, useEffect } from "react";
 import {
-  experienceDeatilFormInitialValues,
+  experienceDeatailFormInitialValues,
   validateExperienceDetailschema,
   ExperienceDetailNameValues,
   ExperienceFormData,
@@ -19,7 +19,7 @@ import { ExperienceContext } from "@modules/restricted/candidate/component/portf
 import { getAutocompleteOption } from "@libs/resources/function/autocomplete.function";
 import {
   addExperienceDetailApi,
-  listCompaniesApi,
+  listCompaniesApi, listCoursesApi,
   listDesignationsApi,
   updateExperienceDetailApi,
 } from "@libs/resources/api/candidate/experience.route";
@@ -38,10 +38,10 @@ const ExperienceFormComponent = ({
   const experienceContext = useContext(ExperienceContext);
 
   let experienceDetailFormik = useFormik({
-    initialValues: experienceDeatilFormInitialValues,
+    initialValues: experienceDeatailFormInitialValues,
     validationSchema: validateExperienceDetailschema,
     onSubmit: (values) => {
-      handleExperienceDetailsubmit(values);
+      handleExperienceDetailSubmit(values);
     },
   });
 
@@ -55,15 +55,12 @@ const ExperienceFormComponent = ({
     experienceDetailFormik.setValues(formData);
   };
 
-  const handleExperienceDetailsubmit = (values) => {
+  const handleExperienceDetailSubmit = (values) => {
     if (!experienceDetailFormik.isValid) {
       return;
     }
-    const formData = {
-      ...values,
-      since: new Date(values.since).toISOString(),
-      until: new Date(values.until).toISOString(),
-    };
+
+
     setIsSaving(true);
     let promise$ = values?.id
       ? updateExperienceDetailApi(values?.id, formData)
@@ -109,6 +106,16 @@ const ExperienceFormComponent = ({
       );
     });
   };
+
+  const getCourseList = (search) => {
+    return listCoursesApi({
+      title: search || undefined,
+    }).then((response) => {
+      return response?.map((item) =>
+          getAutocompleteOption(item, "_id", "title")
+      );
+    });
+  };
   const getCompanyList = (search) => {
     return listCompaniesApi({
       title: search || undefined,
@@ -125,6 +132,14 @@ const ExperienceFormComponent = ({
       [name]: value,
     });
   };
+
+  const onCurrentlyWorkingChange = (value) => {
+    handleValueChange(
+        ExperienceDetailNameValues.IS_CURRENTLY_WORKING,
+        value
+    )
+    experienceDetailFormik.setFieldValue('until', null)
+  }
 
   return (
     <form
@@ -160,12 +175,27 @@ const ExperienceFormComponent = ({
             experienceDetailFormik.errors.companyId
           }
         />
+
+        <UiInputSelectComponenet
+            placeholder={"Course"}
+            apiFun={getCourseList}
+            isAsyncData={true}
+            onBlur={experienceDetailFormik.handleBlur}
+            setSelectedValue={(value) =>
+                handleValueChange(ExperienceDetailNameValues.COURSE_ID, value)
+            }
+            selectedValue={experienceDetailFormik.values.courseId}
+            error={
+                experienceDetailFormik.touched.courseId &&
+                experienceDetailFormik.errors.courseId
+            }
+        />
         <div className="grid grid-cols-2 gap-2">
           <UiInputDate
             className={
               !experienceDetailFormik.values.isCurrentlyWorking
                 ? null
-                : "col-span-full"
+                : null
             }
             label={"Start Date"}
             setInputDate={(value) =>
@@ -181,7 +211,7 @@ const ExperienceFormComponent = ({
               experienceDetailFormik.errors.since
             }
           />
-          {!experienceDetailFormik.values.isCurrentlyWorking && (
+          {true && (
             <UiInputDate
               label={"End Date"}
               setInputDate={(value) =>
@@ -198,10 +228,7 @@ const ExperienceFormComponent = ({
         </div>
         <UiCheckBoxComponent
           onChange={(value) =>
-            handleValueChange(
-              ExperienceDetailNameValues.IS_CURRENTLY_WORKING,
-              value
-            )
+            onCurrentlyWorkingChange(value)
           }
           id={"daschdsv"}
           ischecked={experienceDetailFormik.values.isCurrentlyWorking}
@@ -213,6 +240,10 @@ const ExperienceFormComponent = ({
           onChange={(value) => {
             handleValueChange(ExperienceDetailNameValues.DESCRIPTION, value);
           }}
+          error={
+              experienceDetailFormik.touched.description &&
+              experienceDetailFormik.errors.description
+          }
         />
       </div>
       <div className="flex justify-end gap-2">

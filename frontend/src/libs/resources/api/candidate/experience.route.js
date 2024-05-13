@@ -13,6 +13,10 @@ export const listDesignationsApi = async (params) => {
   return httpGet(`designations`, params).then((response) => response?.data);
 };
 
+export const listCoursesApi = async (params) => {
+  return httpGet(`courses`, params).then((response) => response?.data);
+};
+
 export const listExperiencesApi = async (params) => {
   return httpGet(`experience-detail`, params).then(
     (response) => response?.data
