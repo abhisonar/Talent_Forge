@@ -74,6 +74,12 @@ const EducationFormComponent = ({
         updateEducationData(response);
         toastSuccessMessage(toast);
         setDialogVisible(false);
+
+        if (values?.id) {
+          const {resetEditState} = educationContext;
+          resetEditState();
+        }
+
       })
       .catch((err) => {
         toastApiErrorMessage(toast, err);

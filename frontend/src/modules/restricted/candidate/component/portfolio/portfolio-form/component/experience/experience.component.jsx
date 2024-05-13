@@ -22,7 +22,7 @@ const ExperienceComponent = () => {
   const [editIndex, setEditIndex] = useState(-1);
 
   const [experienceData, setExperienceData] = useState([]);
-  const [experienceDetail, setExperienceDetail] = useState(null);
+  const [editExperienceDetail, setEditExperienceDetail] = useState(null);
 
   const { toast } = useToast();
 
@@ -30,13 +30,13 @@ const ExperienceComponent = () => {
     listExperiences();
   }, []);
 
-  const editExperienceDetail = (data, index) => {
-    setExperienceDetail(data);
+  const editExperienceDetailFn = (data, index) => {
+    setEditExperienceDetail(data);
     setEditIndex(index);
     setOpenAddDialog(true);
   };
 
-  const deleteExperienceDetail = (data, index) => {
+  const deleteExperienceDetailFn = (data, index) => {
     if (!data?._id) return;
     deleteExperienceDetailApi(data._id)
       .then(() => {
@@ -69,7 +69,7 @@ const ExperienceComponent = () => {
       <ExperienceFormComponent
         setIsSaving={setIsSaving}
         isSaving={isSaving}
-        experienceData={experienceDetail}
+        experienceData={editExperienceDetail}
         editIndex={editIndex}
         setDialogVisible={setOpenAddDialog}
       />
@@ -96,13 +96,24 @@ const ExperienceComponent = () => {
     );
   };
 
+  const handleOnHide = () => {
+    setEditExperienceDetail(null);
+    setOpenAddDialog(false)
+  }
+
+  const resetEditState = () => {
+    setEditIndex(-1);
+    setEditExperienceDetail(null);
+  }
+
   return (
     <ExperienceContext.Provider
       value={{
         experienceData,
         setExperienceData,
-        editExperienceDetail,
-        deleteExperienceDetail,
+        editExperienceDetailFn,
+        deleteExperienceDetailFn,
+        resetEditState
       }}
     >
       <div className="w-full flex flex-col gap-2 py-3">
@@ -118,7 +129,8 @@ const ExperienceComponent = () => {
           <UiDialog
             isVisible={openAddDialog}
             setVisible={setOpenAddDialog}
-            title="Add Experience"
+            onHide={handleOnHide}
+            title={editIndex !== -1 ? "Update Experience" : 'Add Experience'}
             dialogWidth={"xl"}
             dialogHeight={"xl"}
           >
@@ -129,7 +141,7 @@ const ExperienceComponent = () => {
           {!isLoading ? (
             <>
               {experienceData.map((item, index) => (
-                <ExperienceViewComponent key={index} />
+                <ExperienceViewComponent key={index} experienceDetail={item} index={index} />
               ))}
             </>
           ) : (

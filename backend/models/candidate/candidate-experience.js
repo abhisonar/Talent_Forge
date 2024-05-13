@@ -6,7 +6,7 @@ const experienceSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  designationId: {
+  designation: {
     type: ObjectId,
     ref: "DesignationCollection",
     default: null,
@@ -20,8 +20,7 @@ const experienceSchema = new mongoose.Schema({
     type: String,
     maxLength: 100,
   },
-  companyId: { type: ObjectId, ref: "CompanyCollection", default: null, required: true },
-  courseId: { type: ObjectId, ref: "CourseCollection", default: null, required: true },
+  company: { type: ObjectId, ref: "CompanyCollection", default: null, required: true },
   isCurrentlyWorking: { type: Boolean, required: true, default: false },
   since: { type: Date, required: true },
   until: {

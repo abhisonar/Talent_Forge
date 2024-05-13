@@ -5,7 +5,9 @@ const UiCard = ({ children, title, ctaTemplate }) => {
   const titleTemplate = () => {
     return (
       <div className="w-full flex items-center justify-between max-h-10">
-        <span className="text-xl">{title}</span>
+        <span className="text-xl">{
+            typeof title === 'function' ? title() : title
+        }</span>
         <div className="p-2">{ctaTemplate && ctaTemplate()}</div>
       </div>
     );

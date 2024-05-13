@@ -3,23 +3,21 @@ import {convertToDayjsDate} from "@libs/resources/function/index.js";
 
 export const validateExperienceDetailschema = Yup.object({
     designationId: Yup.string().required('Designation is required'),
-    designationTitle: Yup.string(),
+    designationTitle: Yup.string().nullable(),
     companyId: Yup.string().required('Company is required'),
-    companyName: Yup.string(),
-    courseId: Yup.string().required("Course is required"),
+    companyName: Yup.string().nullable(),
     since: Yup.string().required("Since Date is required").nullable(),
     isCurrentlyWorking: Yup.boolean(),
     until: Yup.string().nullable().when(
         'isCurrentlyWorking',
         {is: (value) => !value, then: (s) => s.required('Until date is required'), otherwise: (s) => s}),
-    description: Yup.string().max(500)
+    description: Yup.string().max(500).nullable()
 });
 
 export const experienceDeatailFormInitialValues = {
     id: null,
     designationTitle: null,
     designationId: null,
-    courseId: null,
     companyName: null,
     companyId: null,
     since: null,
@@ -32,7 +30,6 @@ export const experienceDeatailFormInitialValues = {
 export const ExperienceDetailNameValues = Object.freeze({
     DESIGNATION_TITLE: "designationTitle",
     DESIGNATION_ID: "designationId",
-    COURSE_ID: "courseId",
     COMPANY_NAME: "companyName",
     COMPANY_ID: "companyId",
     SINCE: "since",
@@ -50,18 +47,36 @@ export class ExperienceFormData {
         }
 
         formData.id = http._id;
-        // formData.designationTitle= http.
-        formData.designationId = http.designationId;
-        // formData.companyName = http.companyName;
-        formData.companyId = http.companyId;
-        formData.courseId = http.courseId;
+        formData.designationTitle= undefined
+        formData.designationId = http.designation?._id;
+        formData.companyName = undefined;
+        formData.companyId = http.company?._id;
         formData.isCurrentlyWorking = http.isCurrentlyWorking;
-        formData.since = convertToDayjsDate(http.since);
-        formData.until = !formData.isCurrentlyWorking ? convertToDayjsDate(http.until) : undefined;
+        formData.since = http.since;
+        formData.until = !formData.isCurrentlyWorking ? http.until : undefined;
         formData.description = http.description;
         return formData;
     }
 
-}
+    static mapToPayload(fm) {
+        const payload = {};
 
+        if (!fm) {
+            return payload;
+        }
+
+        payload.id = fm._id;
+        // payload.designationTitle= fm.
+        payload.designationId = fm.designationId;
+        // payload.companyName = fm.companyName;
+        payload.companyId = fm.companyId;
+        payload.courseId = fm.courseId;
+        payload.isCurrentlyWorking = fm.isCurrentlyWorking;
+        payload.since = convertToDayjsDate(fm.since);
+        payload.until = !payload.isCurrentlyWorking ? convertToDayjsDate(fm.until) : undefined;
+        payload.description = fm.description;
+        return payload;
+    }
+
+}
 
