@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
+import UiInputSelectComponent from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
 import { getEnumsByType } from '@libs/resources/api/other/enum.api';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import React, { useState, useEffect } from 'react';
@@ -26,7 +26,7 @@ const EnumSelectComponent = ({
     });
   };
   return (
-    <UiInputSelectComponenet
+    <UiInputSelectComponent
       selectedValue={selectedValue}
       setSelectedValue={setSelectedValue}
       isAsyncData={false}

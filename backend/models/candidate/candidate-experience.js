@@ -6,23 +6,21 @@ const experienceSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  designationId: {
+  designation: {
     type: ObjectId,
     ref: "DesignationCollection",
     default: null,
+    required: true
   },
   designationTitle: {
     type: String,
-    required: true,
     maxLength: 100,
   },
   companyName: {
     type: String,
-    required: true,
     maxLength: 100,
   },
-
-  companyId: { type: ObjectId, ref: "CompanyCollection", default: null },
+  company: { type: ObjectId, ref: "CompanyCollection", default: null, required: true },
   isCurrentlyWorking: { type: Boolean, required: true, default: false },
   since: { type: Date, required: true },
   until: {
@@ -31,7 +29,7 @@ const experienceSchema = new mongoose.Schema({
       return !this.isCurrentlyWorking;
     },
   },
-  location: { type: Date, required: true },
+  location: { type: String },
   description: { type: String, maxLength: 500 },
 });
 

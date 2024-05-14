@@ -2,7 +2,7 @@
 import EnumSelectComponent from '@libs/components/utility/enum-select/enum-select.component';
 import { UiButton, UiInputText } from '@libs/design-system';
 import UiInputDate from '@libs/design-system/controls/ui-input-date/ui-input-date.component';
-import UiInputSelectComponenet from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
+import UiInputSelectComponent from '@libs/design-system/controls/ui-input-select/ui-input-select.component';
 import {
   listInstitutes,
   listEducationType,
@@ -10,7 +10,7 @@ import {
   addEducationDetail,
   udpateEducationDetail,
 } from '@libs/resources/api';
-import { toastApiErrorMessage, toastSuccessMessage } from '@libs/resources/function';
+import {getCurrentUTCDateTime, toastApiErrorMessage, toastSuccessMessage} from '@libs/resources/function';
 import { getAutocompleteOption } from '@libs/resources/function/autocomplete.function';
 import {
   educationDeatilFormInitialValues,
@@ -74,6 +74,12 @@ const EducationFormComponent = ({
         updateEducationData(response);
         toastSuccessMessage(toast);
         setDialogVisible(false);
+
+        if (values?.id) {
+          const {resetEditState} = educationContext;
+          resetEditState();
+        }
+
       })
       .catch((err) => {
         toastApiErrorMessage(toast, err);
@@ -128,7 +134,7 @@ const EducationFormComponent = ({
   return (
     <form className="flex flex-col gap-2" onSubmit={educationDetailFormik.handleSubmit}>
       <div className="grid grid-cols-1 gap-2">
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
           placeholder={'Education Type'}
           apiFun={getEducationTypeList}
           isAsyncData={true}
@@ -142,7 +148,7 @@ const EducationFormComponent = ({
             educationDetailFormik.errors.educationType
           }
         />
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
           placeholder={'Institute'}
           apiFun={getInstituteList}
           isAsyncData={true}
@@ -153,7 +159,7 @@ const EducationFormComponent = ({
           selectedValue={educationDetailFormik.values.institute}
           error={educationDetailFormik.touched.institute && educationDetailFormik.errors.institute}
         />
-        <UiInputSelectComponenet
+        <UiInputSelectComponent
           placeholder={'Courses'}
           apiFun={getCourseList}
           isAsyncData={true}
@@ -165,6 +171,7 @@ const EducationFormComponent = ({
         <div className="grid grid-cols-2 gap-2">
           <UiInputDate
             label={'Start Year'}
+            maxDate={getCurrentUTCDateTime()}
             setInputDate={(value) => handleDateSelection(EducationDetailNameValues.SINCE, value)}
             selectedDate={educationDetailFormik.values.since}
             onBlur={educationDetailFormik.touched.since && educationDetailFormik.handleBlur}
